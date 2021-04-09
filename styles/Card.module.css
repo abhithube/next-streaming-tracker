@@ -1,0 +1,32 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1%;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #ccc;
+}
+
+.content {
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content > span {
+  margin-bottom: 16px;
+}
+
+.rating svg {
+  color: var(--color-primary);
+}
+
+.title {
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date {
+  color: #666;
+}
