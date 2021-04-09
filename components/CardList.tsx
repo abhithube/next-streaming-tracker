@@ -1,9 +1,14 @@
 import * as React from 'react';
 
-import styles from '../styles/CardList.module.css';
 import Card from './Card';
+import { Media } from '../lib/Media';
+import styles from '../styles/CardList.module.css';
 
-const CardList = ({ cards }) => {
+type CardListProps = {
+  cards: Media[];
+};
+
+const CardList = ({ cards }: CardListProps) => {
   return (
     <div className={styles.grid}>
       {cards.map((card) => (

@@ -6,11 +6,11 @@ import CardList from '../../components/CardList';
 import { Media } from '../../lib/Media';
 import styles from '../../styles/movies.module.css';
 
-type Props = {
+type MoviesProps = {
   movies: Media[];
 };
 
-const Movies: React.FC<Props> = ({ movies }: Props) => {
+const Movies = ({ movies }: MoviesProps) => {
   return (
     <div className={styles.page}>
       <CardList cards={movies} />

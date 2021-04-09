@@ -7,11 +7,11 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Media } from '../lib/Media';
 import styles from '../styles/Card.module.css';
 
-type Props = {
+type CardProps = {
   media: Media;
 };
 
-const Card: React.FC<Props> = ({ media }: Props): React.ReactElement => {
+const Card = ({ media }: CardProps): React.ReactElement => {
   React.useEffect(() => {
     console.log(document.querySelector('img').width);
   }, []);
