@@ -1,24 +1,35 @@
-import * as React from 'react';
-import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
 import axios from 'axios';
 
 import CardList from '../../components/CardList';
 import { Media } from '../../lib/Media';
 import styles from '../../styles/movies.module.css';
 
-type MoviesProps = {
+type Props = {
   movies: Media[];
 };
 
-const Movies = ({ movies }: MoviesProps) => {
+const Movies = ({ movies }: Props) => {
+  useEffect(() => {
+    fetchMovies().then((res) => console.log(res));
+  }, []);
+
   return (
     <div className={styles.page}>
-      <CardList cards={movies} />
+      <CardList cards={movies} type='movies' />
     </div>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps = async () => {
+  const movies = await fetchMovies();
+
+  return {
+    props: { movies },
+  };
+};
+
+const fetchMovies = async (): Promise<Media[]> => {
   const { data } = await axios.get('/movie/popular');
 
   const movies = data.results.map((result) => {
@@ -31,11 +42,7 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   });
 
-  return {
-    props: {
-      movies,
-    },
-  };
+  return movies;
 };
 
 export default Movies;

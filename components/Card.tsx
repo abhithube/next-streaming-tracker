@@ -7,21 +7,18 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Media } from '../lib/Media';
 import styles from '../styles/Card.module.css';
 
-type CardProps = {
+type Props = {
   media: Media;
+  type: 'movies' | 'tv';
 };
 
-const Card = ({ media }: CardProps): React.ReactElement => {
-  React.useEffect(() => {
-    console.log(document.querySelector('img').width);
-  }, []);
-
+const Card = ({ media, type }: Props) => {
   return (
-    <Link href={`/movies/${media.id}`}>
+    <Link href={`/${type}/${media.id}`}>
       <a className={styles.card}>
         <Image
-          src={`https://www.themoviedb.org/t/p/original${media.posterPath}`}
-          alt={`https://www.themoviedb.org/t/p/original${media.posterPath}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${media.posterPath}`}
+          alt={media.title}
           width={300}
           height={450}
         />
