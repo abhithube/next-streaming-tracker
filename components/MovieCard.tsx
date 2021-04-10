@@ -1,37 +1,35 @@
-import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-import { Media } from '../lib/Media';
+import { Movie } from '../lib/types/Movie';
 import styles from '../styles/Card.module.css';
 
 type Props = {
-  media: Media;
-  type: 'movies' | 'tv';
+  movie: Movie;
 };
 
-const Card = ({ media, type }: Props) => {
+const MovieCard = ({ movie }: Props) => {
   return (
-    <Link href={`/${type}/${media.id}`}>
+    <Link href={`/movie/${movie.id}`}>
       <a className={styles.card}>
         <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${media.posterPath}`}
-          alt={media.title}
+          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${movie.posterPath}`}
+          alt={movie.title}
           width={300}
           height={450}
         />
         <div className={styles.content}>
           <span className={styles.rating}>
-            <FontAwesomeIcon icon={faStar} /> {media.voteAverage}
+            <FontAwesomeIcon icon={faStar} /> {movie.voteAverage}
           </span>
-          <span className={styles.title}>{media.title}</span>
-          <span className={styles.date}>{media.releaseDate}</span>
+          <span className={styles.title}>{movie.title}</span>
+          <span className={styles.date}>{movie.releaseDate}</span>
         </div>
       </a>
     </Link>
   );
 };
 
-export default Card;
+export default MovieCard;

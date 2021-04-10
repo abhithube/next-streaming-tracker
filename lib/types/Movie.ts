@@ -1,4 +1,4 @@
-export type Media = {
+export type Movie = {
   id: number;
   title: string;
   posterPath: string;

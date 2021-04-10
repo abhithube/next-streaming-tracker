@@ -1,18 +1,25 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import axios from 'axios';
 
-import CardList from '../../components/CardList';
-import { Media } from '../../lib/Media';
+import GridList from '../../components/layout/GridList';
+import ShowCard from '../../components/ShowCard';
+import { Show } from '../../lib/types/Show';
 import styles from '../../styles/shows.module.css';
 
 type Props = {
-  shows: Media[];
+  shows: Show[];
 };
 
 const Shows = ({ shows }: Props) => {
   return (
     <div className={styles.page}>
-      <CardList cards={shows} type='tv' />
+      <GridList columns={5}>
+        {shows.map((show) => (
+          <Fragment key={show.id}>
+            <ShowCard show={show} />
+          </Fragment>
+        ))}
+      </GridList>
     </div>
   );
 };
@@ -25,15 +32,15 @@ export const getStaticProps = async () => {
   };
 };
 
-const fetchShows = async (): Promise<Media[]> => {
+const fetchShows = async (): Promise<Show[]> => {
   const { data } = await axios.get('/tv/popular');
 
   const shows = data.results.map((result) => {
     return {
       id: result.id,
-      title: result.name,
+      name: result.name,
       posterPath: result.poster_path,
-      releaseDate: result.first_air_date,
+      firstAirDate: result.first_air_date,
       voteAverage: result.vote_average,
     };
   });

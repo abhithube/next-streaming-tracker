@@ -1,22 +1,25 @@
-import { useEffect } from 'react';
+import { Fragment } from 'react';
 import axios from 'axios';
 
-import CardList from '../../components/CardList';
-import { Media } from '../../lib/Media';
+import GridList from '../../components/layout/GridList';
+import MovieCard from '../../components/MovieCard';
+import { Movie } from '../../lib/types/Movie';
 import styles from '../../styles/movies.module.css';
 
 type Props = {
-  movies: Media[];
+  movies: Movie[];
 };
 
 const Movies = ({ movies }: Props) => {
-  useEffect(() => {
-    fetchMovies().then((res) => console.log(res));
-  }, []);
-
   return (
     <div className={styles.page}>
-      <CardList cards={movies} type='movies' />
+      <GridList columns={5}>
+        {movies.map((movie) => (
+          <Fragment key={movie.id}>
+            <MovieCard movie={movie} />
+          </Fragment>
+        ))}
+      </GridList>
     </div>
   );
 };
@@ -29,7 +32,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const fetchMovies = async (): Promise<Media[]> => {
+const fetchMovies = async (): Promise<Movie[]> => {
   const { data } = await axios.get('/movie/popular');
 
   const movies = data.results.map((result) => {
