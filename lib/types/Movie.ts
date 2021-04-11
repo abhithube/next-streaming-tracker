@@ -1,7 +1,11 @@
+import { MovieDetails } from './MovieDetails';
+import { MovieSummary } from './MovieSummary';
+import { Cast } from './Cast';
+import { Provider } from './Provider';
+
 export type Movie = {
-  id: number;
-  title: string;
-  posterPath: string;
-  releaseDate: string;
-  voteAverage: string;
+  movieDetails: MovieDetails;
+  cast: Cast[];
+  recommendations: MovieSummary[];
+  providers: Provider[];
 };
