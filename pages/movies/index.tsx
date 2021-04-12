@@ -1,26 +1,31 @@
 import { Fragment } from 'react';
 import axios from 'axios';
+import slugify from 'slugify';
+import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
-import GridList from '../../components/layout/GridList';
 import MovieCard from '../../components/MovieCard';
-import { Movie } from '../../lib/types/Movie';
-import styles from '../../styles/movies.module.css';
+import Meta from '../../components/Meta';
+import { MovieSummary } from '../../lib/types/MovieSummary';
 
 type Props = {
-  movies: Movie[];
+  movies: MovieSummary[];
 };
 
-const Movies = ({ movies }: Props) => {
+const MoviesPage = ({ movies }: Props) => {
   return (
-    <div className={styles.page}>
-      <GridList columns={5}>
+    <Container maxW='80%' mt='8' mb='16'>
+      <Meta title='Movies' />
+      <Heading as='h1' mb='4'>
+        Popular Movies
+      </Heading>
+      <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
         {movies.map((movie) => (
           <Fragment key={movie.id}>
-            <MovieCard movie={movie} />
+            <MovieCard movieSummary={movie} />
           </Fragment>
         ))}
-      </GridList>
-    </div>
+      </SimpleGrid>
+    </Container>
   );
 };
 
@@ -32,20 +37,25 @@ export const getStaticProps = async () => {
   };
 };
 
-const fetchMovies = async (): Promise<Movie[]> => {
+const fetchMovies = async (): Promise<MovieSummary[]> => {
   const { data } = await axios.get('/movie/popular');
 
-  const movies = data.results.map((result) => {
+  const movies: MovieSummary[] = data.results.map((movie) => {
     return {
-      id: result.id,
-      title: result.title,
-      posterPath: result.poster_path,
-      releaseDate: result.release_date,
-      voteAverage: result.vote_average,
+      id: movie.id,
+      title: movie.title,
+      slug: `${movie.id}-${slugify(movie.title, {
+        lower: true,
+        strict: true,
+        locale: 'us',
+      })}`,
+      posterPath: movie.poster_path,
+      releaseDate: movie.release_date,
+      voteAverage: movie.vote_average,
     };
   });
 
   return movies;
 };
 
-export default Movies;
+export default MoviesPage;

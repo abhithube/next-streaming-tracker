@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Heading,
   HStack,
@@ -11,19 +11,19 @@ import {
 } from '@chakra-ui/react';
 import { AiFillStar } from 'react-icons/ai';
 
-import { MovieSummary } from '../lib/types/MovieSummary';
+import { TVShowSummary } from '../lib/types/TVShowSummary';
 
 type Props = {
-  movieSummary: MovieSummary;
+  tvShowSummary: TVShowSummary;
 };
 
-const MovieCard = ({ movieSummary }: Props) => {
+const TVShowCard = ({ tvShowSummary }: Props) => {
   return (
     <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
-      <Link href={`/movies/${movieSummary.slug}`} passHref>
+      <Link href={`/movies/${tvShowSummary.slug}`} passHref>
         <LinkOverlay>
           <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/original${movieSummary.posterPath}`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/original${tvShowSummary.posterPath}`}
             width={300}
             height={450}
           />
@@ -32,13 +32,13 @@ const MovieCard = ({ movieSummary }: Props) => {
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='green.300' />
-          <Text>{movieSummary.voteAverage}</Text>
+          <Text>{tvShowSummary.voteAverage}</Text>
         </HStack>
         <Heading as='h3' fontSize='xl' noOfLines={2}>
-          {movieSummary.title}
+          {tvShowSummary.name}
         </Heading>
         <Text fontSize='sm' color='gray.500'>
-          {new Date(movieSummary.releaseDate).toLocaleDateString('en-US', {
+          {new Date(tvShowSummary.firstAirDate).toLocaleDateString('en-US', {
             month: 'short',
             day: '2-digit',
             year: 'numeric',
@@ -49,4 +49,4 @@ const MovieCard = ({ movieSummary }: Props) => {
   );
 };
 
-export default MovieCard;
+export default TVShowCard;

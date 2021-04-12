@@ -1,6 +1,6 @@
 import { MovieDetails } from './MovieDetails';
-import { MovieSummary } from './MovieSummary';
 import { Cast } from './Cast';
+import { MovieSummary } from './MovieSummary';
 import { Provider } from './Provider';
 
 export type Movie = {
