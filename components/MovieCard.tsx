@@ -31,7 +31,7 @@ const MovieCard = ({ movieSummary }: Props) => {
       </Link>
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
-          <Icon as={AiFillStar} fontSize='xl' color='green.300' />
+          <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
           <Text>{movieSummary.voteAverage}</Text>
         </HStack>
         <Heading as='h3' fontSize='xl' noOfLines={2}>

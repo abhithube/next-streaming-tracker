@@ -30,7 +30,11 @@ const Navbar = () => {
         <LinkBox>
           <NextLink href='/' passHref>
             <LinkOverlay>
-              <HStack spacing='1' color='green.300'>
+              <HStack
+                spacing='1'
+                bgGradient='linear(to-r, green.300, blue.300)'
+                bgClip='text'
+              >
                 <Icon as={FcFilmReel} fontSize='3xl' />
                 <Heading fontSize='2xl'>StreamDB</Heading>
               </HStack>

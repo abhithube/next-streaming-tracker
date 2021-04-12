@@ -8,7 +8,7 @@ const Meta = ({ title }: Props) => {
   return (
     <div>
       <Head>
-        <title>{title ? `StreamDB | ${title}` : 'StreamDB'}</title>
+        <title>{title ? `${title} | StreamDB` : 'StreamDB'}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
     </div>
