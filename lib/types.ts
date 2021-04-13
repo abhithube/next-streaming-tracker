@@ -16,13 +16,6 @@ export type TVShowSummary = {
   voteAverage: string;
 };
 
-export type Movie = {
-  movieDetails: MovieDetails;
-  cast: Cast[];
-  recommendations: MovieSummary[];
-  providers: Provider[];
-};
-
 export type MovieDetails = {
   id: number;
   title: string;
@@ -43,7 +36,10 @@ export type MovieDetails = {
     | 'Canceled';
   budget: number;
   revenue: number;
-  crew: Crew[];
+  crew: CrewMember[];
+  cast: CastMember[];
+  recommendations: MovieSummary[];
+  providers: Provider[];
 };
 
 export type Genre = {
@@ -51,13 +47,13 @@ export type Genre = {
   name: string;
 };
 
-export type Crew = {
+export type CrewMember = {
   id: number;
   name: string;
   job: 'Director' | 'Screenplay' | 'Story' | 'Writer';
 };
 
-export type Cast = {
+export type CastMember = {
   id: number;
   name: string;
   character: string;
