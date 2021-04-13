@@ -22,11 +22,13 @@ export type MovieDetails = {
   posterPath: string;
   releaseDate: string;
   voteAverage: number;
+  voteCount: number;
   backdropPath: string;
   overview: string;
+  tagline: string;
   ageRating: string;
   runtime: number | null;
-  genres: Genre[];
+  genres: string;
   status:
     | 'Rumored'
     | 'Planned'
@@ -40,11 +42,6 @@ export type MovieDetails = {
   cast: CastMember[];
   recommendations: MovieSummary[];
   providers: Provider[];
-};
-
-export type Genre = {
-  id: number;
-  name: string;
 };
 
 export type CrewMember = {

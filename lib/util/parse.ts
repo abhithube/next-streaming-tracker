@@ -41,6 +41,10 @@ export const parseAgeRating = (data: any[]): string => {
   return usReleases[usReleases.length - 1].certification;
 };
 
+export const parseGenres = (data: any[]) => {
+  return data.map(({ name }) => name).join(', ');
+};
+
 export const parseCrew = (data: any[]): CrewMember[] => {
   let crew: CrewMember[] = data.reduce((filtered: CrewMember[], person) => {
     if (['Director', 'Screenplay', 'Story', 'Writer'].includes(person.job)) {

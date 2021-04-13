@@ -5,11 +5,12 @@ import {
   parseAgeRating,
   parseCast,
   parseCrew,
+  parseGenres,
   parseMovies,
   parseProviders,
   parseRecommendations,
   parseTVShows,
-} from './parser';
+} from './parse';
 import { SUPPORTED_PROVIDERS } from '../constants';
 
 export const fetchMovies = async () => {
@@ -43,6 +44,7 @@ export const fetchMovie = async (id: string) => {
   });
 
   const ageRating = parseAgeRating(data.release_dates.results);
+  const genres = parseGenres(data.genres);
   const crew = parseCrew(data.credits.crew);
   const cast = parseCast(data.credits.cast);
   const recommendations = parseRecommendations(data.recommendations.results);
@@ -54,11 +56,13 @@ export const fetchMovie = async (id: string) => {
     posterPath: data.poster_path,
     releaseDate: data.release_date,
     voteAverage: data.vote_average,
+    voteCount: data.vote_count,
     backdropPath: data.backdrop_path,
     overview: data.overview,
+    tagline: data.tagline,
     ageRating,
     runtime: data.runtime,
-    genres: data.genres,
+    genres,
     status: data.status,
     budget: data.budget,
     revenue: data.revenue,
