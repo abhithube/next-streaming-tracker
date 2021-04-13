@@ -20,7 +20,7 @@ type Props = {
 const TVShowCard = ({ tvShowSummary }: Props) => {
   return (
     <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
-      <Link href={`/movies/${tvShowSummary.slug}`} passHref>
+      <Link href={`/tv/${tvShowSummary.slug}`} passHref>
         <LinkOverlay>
           <Image
             src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/original${tvShowSummary.posterPath}`}
@@ -31,7 +31,7 @@ const TVShowCard = ({ tvShowSummary }: Props) => {
       </Link>
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
-          <Icon as={AiFillStar} fontSize='xl' color='green.300' />
+          <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
           <Text>{tvShowSummary.voteAverage}</Text>
         </HStack>
         <Heading as='h3' fontSize='xl' noOfLines={2}>

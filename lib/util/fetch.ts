@@ -24,7 +24,7 @@ export const fetchMovies = async () => {
   return parseMovies(data.results);
 };
 
-export const fetchtvShows = async () => {
+export const fetchTVShows = async () => {
   const { data } = await axios.get('/discover/tv', {
     params: {
       with_watch_providers: SUPPORTED_PROVIDERS.join('|'),

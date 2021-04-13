@@ -1,11 +1,10 @@
 import { Fragment } from 'react';
-import axios from 'axios';
-import slugify from 'slugify';
 import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
 import Meta from '../../components/Meta';
-import { MovieSummary } from '../../lib/types/MovieSummary';
+import { MovieSummary } from '../../lib/types';
+import { fetchMovies } from '../../lib/util/fetch';
 
 type Props = {
   movies: MovieSummary[];
@@ -35,27 +34,6 @@ export const getStaticProps = async () => {
   return {
     props: { movies },
   };
-};
-
-const fetchMovies = async (): Promise<MovieSummary[]> => {
-  const { data } = await axios.get('/movie/popular');
-
-  const movies: MovieSummary[] = data.results.map((movie) => {
-    return {
-      id: movie.id,
-      title: movie.title,
-      slug: `${movie.id}-${slugify(movie.title, {
-        lower: true,
-        strict: true,
-        locale: 'us',
-      })}`,
-      posterPath: movie.poster_path,
-      releaseDate: movie.release_date,
-      voteAverage: movie.vote_average,
-    };
-  });
-
-  return movies;
 };
 
 export default MoviesPage;

@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { AiFillStar } from 'react-icons/ai';
 
-import { MovieSummary } from '../lib/types/MovieSummary';
+import { MovieSummary } from '../lib/types';
 
 type Props = {
   movieSummary: MovieSummary;
