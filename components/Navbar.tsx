@@ -30,24 +30,26 @@ const Navbar = () => {
         <LinkBox>
           <NextLink href='/' passHref>
             <LinkOverlay>
-              <HStack
-                spacing='1'
-                bgGradient='linear(to-r, green.300, blue.300)'
-                bgClip='text'
-              >
+              <HStack spacing='1'>
                 <Icon as={FcFilmReel} fontSize='3xl' />
-                <Heading fontSize='2xl'>StreamDB</Heading>
+                <Heading
+                  fontSize='2xl'
+                  bgGradient='linear(to-r, green.300, blue.300)'
+                  bgClip='text'
+                >
+                  StreamDB
+                </Heading>
               </HStack>
             </LinkOverlay>
           </NextLink>
         </LinkBox>
         <HStack spacing='4'>
-          <Box _hover={{ color: 'green.300' }}>
+          <Box _hover={{ color: 'blue.300' }}>
             <Link as={NextLink} href='/movies'>
               Movies
             </Link>
           </Box>
-          <Box _hover={{ color: 'green.300' }}>
+          <Box _hover={{ color: 'blue.300' }}>
             <Link as={NextLink} href='/tv'>
               TV
             </Link>
