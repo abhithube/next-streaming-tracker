@@ -2,7 +2,7 @@ import NextImage from 'next/image';
 import { Center, chakra, Divider, Stack, Text, VStack } from '@chakra-ui/react';
 
 import { MovieDetails } from '../lib/types';
-import { BACKDROP_URL, LOGO_URL, POSTER_URL } from '../lib/constants';
+import { BACKDROP_URL, POSTER_URL } from '../lib/constants';
 import MovieStats from './MovieStats';
 import MovieOverview from './MovieOverview';
 
@@ -32,8 +32,8 @@ const MovieHeader = ({ movieDetails }: Props) => {
         <VStack spacing='4'>
           <ChakraImage
             src={`${POSTER_URL + movieDetails.posterPath}`}
-            width='360'
-            height='540'
+            width='300'
+            height='450'
             borderRadius='lg'
           />
           {movieDetails.tagline && (
