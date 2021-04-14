@@ -1,6 +1,5 @@
 import * as React from 'react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import {
   Box,
   Center,
@@ -10,12 +9,10 @@ import {
   Link,
   LinkBox,
   LinkOverlay,
-  Text,
 } from '@chakra-ui/react';
 import { FcFilmReel } from 'react-icons/fc';
 
 const Navbar = () => {
-  const router = useRouter();
   return (
     <Center
       as='nav'

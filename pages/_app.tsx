@@ -6,7 +6,9 @@ import Navbar from '../components/Navbar';
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 axios.defaults.params = { api_key: process.env.NEXT_PUBLIC_API_KEY };
 
-const MyApp = ({ Component, pageProps }) => {
+type AppProps = { Component: any; pageProps: any };
+
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ChakraProvider>
       <CSSReset />
@@ -18,4 +20,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default App;

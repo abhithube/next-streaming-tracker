@@ -13,7 +13,7 @@ export const formatRuntime = (data: number) => {
   return `${Math.floor(data / 60)}h ${data % 60}m`;
 };
 
-export const formatRatingColor = (data: string) => {
+export const formatRating = (data: string) => {
   switch (data) {
     case 'PG-13':
       return 'yellow';
@@ -28,4 +28,12 @@ export const formatRatingColor = (data: string) => {
     default:
       return 'gray';
   }
+};
+
+export const formatReleaseYear = (data: string) => {
+  return new Date(data).getFullYear();
+};
+
+export const formatReleaseDate = (data: string) => {
+  return new Date(data).toLocaleDateString();
 };

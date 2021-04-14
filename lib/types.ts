@@ -39,19 +39,19 @@ export type MovieDetails = {
   budget: number;
   revenue: number;
   studio: string;
-  crew: CrewMember[];
-  cast: CastMember[];
+  creators: Creator[];
+  actors: Actor[];
   recommendations: MovieSummary[];
   providers: Provider[];
 };
 
-export type CrewMember = {
+export type Creator = {
   id: number;
   name: string;
   job: 'Director' | 'Screenplay' | 'Story' | 'Writer';
 };
 
-export type CastMember = {
+export type Actor = {
   id: number;
   name: string;
   character: string;

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { MovieDetails } from '../types';
 import {
   parseAgeRating,
-  parseCast,
-  parseCrew,
+  parseActors,
+  parseCreators,
   parseGenres,
   parseMovies,
   parseProviders,
@@ -47,8 +47,8 @@ export const fetchMovie = async (id: string) => {
   const ageRating = parseAgeRating(data.release_dates.results);
   const genres = parseGenres(data.genres);
   const studio = parseStudio(data.production_companies);
-  const crew = parseCrew(data.credits.crew);
-  const cast = parseCast(data.credits.cast);
+  const creators = parseCreators(data.credits.crew);
+  const actors = parseActors(data.credits.cast);
   const recommendations = parseRecommendations(data.recommendations.results);
   const providers = parseProviders(data['watch/providers'].results);
 
@@ -69,8 +69,8 @@ export const fetchMovie = async (id: string) => {
     budget: data.budget,
     revenue: data.revenue,
     studio,
-    crew,
-    cast,
+    creators,
+    actors,
     recommendations,
     providers,
   };

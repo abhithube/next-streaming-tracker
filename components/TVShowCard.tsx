@@ -13,11 +13,9 @@ import { AiFillStar } from 'react-icons/ai';
 
 import { TVShowSummary } from '../lib/types';
 
-type Props = {
-  tvShowSummary: TVShowSummary;
-};
+type TVShowCardProps = { tvShowSummary: TVShowSummary };
 
-const TVShowCard = ({ tvShowSummary }: Props) => {
+const TVShowCard = ({ tvShowSummary }: TVShowCardProps) => {
   return (
     <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
       <Link href={`/tv/${tvShowSummary.slug}`} passHref>

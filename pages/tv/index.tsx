@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { GetStaticProps } from 'next';
 import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import TVShowCard from '../../components/TVShowCard';
@@ -6,11 +7,9 @@ import Meta from '../../components/Meta';
 import { TVShowSummary } from '../../lib/types';
 import { fetchTVShows } from '../../lib/util/fetch';
 
-type Props = {
-  tvShows: TVShowSummary[];
-};
+export type TVShowsPageProps = { tvShows: TVShowSummary[] };
 
-const TVShowsPage = ({ tvShows }: Props) => {
+const TVShowsPage = ({ tvShows }: TVShowsPageProps) => {
   return (
     <Container maxW='80%' mt='8' mb='16'>
       <Meta title='TV Shows' />
@@ -28,7 +27,7 @@ const TVShowsPage = ({ tvShows }: Props) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const tvShows = await fetchTVShows();
 
   return {

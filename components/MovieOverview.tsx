@@ -12,21 +12,23 @@ import {
 } from '@chakra-ui/react';
 
 import { MovieDetails } from '../lib/types';
+import {
+  formatRating,
+  formatReleaseYear,
+  formatRuntime,
+} from '../lib/util/format';
 import { LOGO_URL } from '../lib/constants';
-import { formatRatingColor, formatRuntime } from '../lib/util/format';
 
-type Props = {
-  movieDetails: MovieDetails;
-};
+type MovieOverviewProps = { movieDetails: MovieDetails };
 
-const MovieOverview = ({ movieDetails }: Props) => {
+const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
   return (
     <Flex direction='column' align='flex-start' flexBasis='50%'>
       <HStack mb='2'>
         <Heading as='h1'>
           {movieDetails.title}{' '}
           <Text as='span' fontWeight='normal' color='gray.400'>
-            ({new Date(movieDetails.releaseDate).getFullYear()})
+            ({formatReleaseYear(movieDetails.releaseDate)})
           </Text>
         </Heading>
       </HStack>
@@ -34,15 +36,19 @@ const MovieOverview = ({ movieDetails }: Props) => {
         <Badge
           variant='outline'
           fontSize='sm'
-          colorScheme={formatRatingColor(movieDetails.ageRating)}
+          colorScheme={formatRating(movieDetails.ageRating)}
         >
           {movieDetails.ageRating}
         </Badge>
         <Text>{movieDetails.voteAverage}</Text>
         <Divider orientation='vertical' />
         <Text>{movieDetails.genres}</Text>
-        <Divider orientation='vertical' />
-        <Text>{formatRuntime(movieDetails.runtime)}</Text>
+        {movieDetails.runtime && (
+          <>
+            <Divider orientation='vertical' />
+            <Text>{formatRuntime(movieDetails.runtime)}</Text>
+          </>
+        )}
       </HStack>
       {movieDetails.providers.length > 0 && (
         <HStack
@@ -77,7 +83,7 @@ const MovieOverview = ({ movieDetails }: Props) => {
         {movieDetails.overview}
       </Text>
       <SimpleGrid columns={[2, 2, 3]} spacing='2' mb='4' w='100%'>
-        {movieDetails.crew.map((person) => (
+        {movieDetails.creators.map((person) => (
           <Box key={person.id} pr='8'>
             <Text fontWeight='bold'>{person.name}</Text>
             <Text color='gray.400'>{person.job}</Text>

@@ -6,11 +6,9 @@ import Meta from '../../components/Meta';
 import { MovieDetails } from '../../lib/types';
 import { fetchMovie, fetchMovies } from '../../lib/util/fetch';
 
-type Props = {
-  movieDetails: MovieDetails;
-};
+type MoviePageProps = { movieDetails: MovieDetails };
 
-const MoviePage = ({ movieDetails }: Props) => {
+const MoviePage = ({ movieDetails }: MoviePageProps) => {
   return (
     <Box>
       <Meta title={movieDetails.title} />
@@ -19,13 +17,10 @@ const MoviePage = ({ movieDetails }: Props) => {
   );
 };
 
-type Params = {
-  params: { slug: string };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }: Params) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const movieDetails = await fetchMovie(params.slug.split('-')[0]);
+    if (!params || !params.slug) return { notFound: true };
+    const movieDetails = await fetchMovie(params.slug.toString().split('-')[0]);
 
     if (!movieDetails) return { notFound: true };
 

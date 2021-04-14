@@ -1,16 +1,14 @@
 import NextImage from 'next/image';
 import { Center, chakra, Divider, Stack, Text, VStack } from '@chakra-ui/react';
 
-import { MovieDetails } from '../lib/types';
-import { BACKDROP_URL, POSTER_URL } from '../lib/constants';
 import MovieStats from './MovieStats';
 import MovieOverview from './MovieOverview';
+import { MovieDetails } from '../lib/types';
+import { BACKDROP_URL, POSTER_URL } from '../lib/constants';
 
-type Props = {
-  movieDetails: MovieDetails;
-};
+type MovieHeaderProps = { movieDetails: MovieDetails };
 
-const MovieHeader = ({ movieDetails }: Props) => {
+const MovieHeader = ({ movieDetails }: MovieHeaderProps) => {
   return (
     <Center
       bgImg={`

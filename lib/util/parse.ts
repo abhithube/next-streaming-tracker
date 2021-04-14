@@ -1,6 +1,6 @@
 import {
-  CastMember,
-  CrewMember,
+  Actor,
+  Creator,
   MovieSummary,
   Provider,
   TVShowSummary,
@@ -50,34 +50,36 @@ export const parseStudio = (data: any[]): string => {
   else return '';
 };
 
-export const parseCrew = (data: any[]): CrewMember[] => {
-  let crew: CrewMember[] = data.reduce((filtered: CrewMember[], person) => {
-    if (['Director', 'Screenplay', 'Story', 'Writer'].includes(person.job)) {
-      const elem = filtered.find((existing) => existing.id === person.id);
-      if (elem) elem.job += `, ${person.job}`;
+export const parseCreators = (data: any[]): Creator[] => {
+  let creators: Creator[] = data.reduce((filtered: Creator[], creator) => {
+    if (['Director', 'Screenplay', 'Story', 'Writer'].includes(creator.job)) {
+      const elem = filtered.find(({ id }) => id === creator.id);
+      if (elem) elem.job += `, ${creator.job}`;
       else {
-        filtered.push({ id: person.id, name: person.name, job: person.job });
+        const { id, name, job } = creator;
+        filtered.push({ id, name, job });
       }
     }
 
     return filtered;
   }, []);
 
-  if (crew.length > 6) crew = crew.slice(0, 6);
+  if (creators.length > 6) creators = creators.slice(0, 6);
 
-  return crew;
+  return creators;
 };
 
-export const parseCast = (data: any[]): CastMember[] => {
+export const parseActors = (data: any[]): Actor[] => {
   if (data.length > 20) data = data.slice(0, 20);
 
-  return data.reduce((filtered: CastMember[], person) => {
-    if (person.profile_path) {
+  return data.reduce((filtered: Actor[], actor) => {
+    if (actor.profile_path) {
+      const { id, name, character } = actor;
       filtered.push({
-        id: person.id,
-        name: person.name,
-        character: person.character,
-        profilePath: person.profile_path,
+        id,
+        name,
+        character,
+        profilePath: actor.profile_path,
       });
     }
 
@@ -103,7 +105,7 @@ export const parseRecommendations = (data: any[]): MovieSummary[] => {
 export const parseProviders = (data: any): Provider[] => {
   if (!data.US.flatrate) return [];
 
-  return data.US.flatrate.reduce((filtered: Provider[], provider) => {
+  return data.US.flatrate.reduce((filtered: Provider[], provider: any) => {
     if (SUPPORTED_PROVIDERS.includes(provider.provider_id)) {
       filtered.push({
         id: provider.provider_id,

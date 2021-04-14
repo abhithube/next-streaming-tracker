@@ -1,13 +1,11 @@
 import { Box, Heading, Text, VStack } from '@chakra-ui/layout';
 
 import { MovieDetails } from '../lib/types';
-import { formatCurrency } from '../lib/util/format';
+import { formatCurrency, formatReleaseYear } from '../lib/util/format';
 
-type Props = {
-  movieDetails: MovieDetails;
-};
+type MovieStatsProps = { movieDetails: MovieDetails };
 
-const MovieStats = ({ movieDetails }: Props) => {
+const MovieStats = ({ movieDetails }: MovieStatsProps) => {
   return (
     <VStack align='flex-start' spacing='4'>
       <Box>
@@ -21,7 +19,7 @@ const MovieStats = ({ movieDetails }: Props) => {
           Release Date
         </Heading>
         <Text color='gray.400'>
-          {new Date(movieDetails.releaseDate).toLocaleDateString()}
+          {formatReleaseYear(movieDetails.releaseDate)}
         </Text>
       </Box>
       <Box>

@@ -13,11 +13,9 @@ import { AiFillStar } from 'react-icons/ai';
 
 import { MovieSummary } from '../lib/types';
 
-type Props = {
-  movieSummary: MovieSummary;
-};
+type MovieCardProps = { movieSummary: MovieSummary };
 
-const MovieCard = ({ movieSummary }: Props) => {
+const MovieCard = ({ movieSummary }: MovieCardProps) => {
   return (
     <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
       <Link href={`/movies/${movieSummary.slug}`} passHref>

@@ -1,10 +1,8 @@
 import Head from 'next/head';
 
-type Props = {
-  title?: string;
-};
+type MetaProps = { title?: string };
 
-const Meta = ({ title }: Props) => {
+const Meta = ({ title }: MetaProps) => {
   return (
     <div>
       <Head>

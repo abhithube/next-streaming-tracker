@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { GetStaticProps } from 'next';
 import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
@@ -6,11 +7,9 @@ import Meta from '../../components/Meta';
 import { MovieSummary } from '../../lib/types';
 import { fetchMovies } from '../../lib/util/fetch';
 
-type Props = {
-  movies: MovieSummary[];
-};
+type MoviesPageProps = { movies: MovieSummary[] };
 
-const MoviesPage = ({ movies }: Props) => {
+const MoviesPage = ({ movies }: MoviesPageProps) => {
   return (
     <Container maxW='80%' mt='8' mb='16'>
       <Meta title='Movies' />
@@ -28,7 +27,7 @@ const MoviesPage = ({ movies }: Props) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const movies = await fetchMovies();
 
   return {
