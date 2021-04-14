@@ -20,7 +20,6 @@ export type MovieDetails = {
   id: number;
   title: string;
   posterPath: string;
-  releaseDate: string;
   voteAverage: number;
   voteCount: number;
   backdropPath: string;
@@ -36,8 +35,10 @@ export type MovieDetails = {
     | 'Post Production'
     | 'Released'
     | 'Canceled';
+  releaseDate: string;
   budget: number;
   revenue: number;
+  studio: string;
   crew: CrewMember[];
   cast: CastMember[];
   recommendations: MovieSummary[];
