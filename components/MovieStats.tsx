@@ -28,19 +28,23 @@ const MovieStats = ({ movieDetails }: Props) => {
         <Heading as='h3' fontSize='xl'>
           Budget
         </Heading>
-        <Text color='gray.400'>{formatCurrency(movieDetails.budget)}</Text>
+        <Text color='gray.400'>
+          {movieDetails.budget ? formatCurrency(movieDetails.budget) : 'N/A'}
+        </Text>
       </Box>
       <Box>
         <Heading as='h3' fontSize='xl'>
           Revenue
         </Heading>
-        <Text color='gray.400'>{formatCurrency(movieDetails.revenue)}</Text>
+        <Text color='gray.400'>
+          {movieDetails.revenue ? formatCurrency(movieDetails.revenue) : 'N/A'}
+        </Text>
       </Box>
       <Box>
         <Heading as='h3' fontSize='xl'>
           Studio
         </Heading>
-        <Text color='gray.400'>{movieDetails.studio}</Text>
+        <Text color='gray.400'>{movieDetails.studio || 'N/A'}</Text>
       </Box>
     </VStack>
   );

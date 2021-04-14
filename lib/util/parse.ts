@@ -45,6 +45,11 @@ export const parseGenres = (data: any[]) => {
   return data.map(({ name }) => name).join(', ');
 };
 
+export const parseStudio = (data: any[]): string => {
+  if (data.length > 0) return data[0].name;
+  else return '';
+};
+
 export const parseCrew = (data: any[]): CrewMember[] => {
   let crew: CrewMember[] = data.reduce((filtered: CrewMember[], person) => {
     if (['Director', 'Screenplay', 'Story', 'Writer'].includes(person.job)) {

@@ -9,6 +9,7 @@ import {
   parseMovies,
   parseProviders,
   parseRecommendations,
+  parseStudio,
   parseTVShows,
 } from './parse';
 import { SUPPORTED_PROVIDERS } from '../constants';
@@ -45,6 +46,7 @@ export const fetchMovie = async (id: string) => {
 
   const ageRating = parseAgeRating(data.release_dates.results);
   const genres = parseGenres(data.genres);
+  const studio = parseStudio(data.production_companies);
   const crew = parseCrew(data.credits.crew);
   const cast = parseCast(data.credits.cast);
   const recommendations = parseRecommendations(data.recommendations.results);
@@ -66,7 +68,7 @@ export const fetchMovie = async (id: string) => {
     releaseDate: data.release_date,
     budget: data.budget,
     revenue: data.revenue,
-    studio: data.production_companies[0].name,
+    studio,
     crew,
     cast,
     recommendations,
