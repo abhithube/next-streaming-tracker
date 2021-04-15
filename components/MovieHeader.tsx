@@ -1,10 +1,19 @@
-import NextImage from 'next/image';
-import { Center, chakra, Divider, Stack, Text, VStack } from '@chakra-ui/react';
+import {
+  Center,
+  Divider,
+  Heading,
+  HStack,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 
 import MovieStats from './MovieStats';
 import MovieOverview from './MovieOverview';
+import WrapperImage from './WrapperImage';
 import { MovieDetails } from '../lib/types';
-import { BACKDROP_URL, POSTER_URL } from '../lib/constants';
+import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
+import { formatReleaseYear } from '../lib/util/format';
 
 type MovieHeaderProps = { movieDetails: MovieDetails };
 
@@ -27,12 +36,13 @@ const MovieHeader = ({ movieDetails }: MovieHeaderProps) => {
         w='80%'
         align='center'
       >
-        <VStack spacing='4'>
-          <ChakraImage
-            src={`${POSTER_URL + movieDetails.posterPath}`}
+        <VStack spacing='4' flexBasis='30%'>
+          <WrapperImage
+            src={IMAGE_URL + movieDetails.posterPath}
             width='300'
             height='450'
-            borderRadius='lg'
+            minW='300'
+            rounded='lg'
           />
           {movieDetails.tagline && (
             <Text fontStyle='italic' color='gray.400'>
@@ -40,16 +50,14 @@ const MovieHeader = ({ movieDetails }: MovieHeaderProps) => {
             </Text>
           )}
         </VStack>
-        <MovieOverview movieDetails={movieDetails} />
-        <Divider orientation='vertical' h='200' />
-        <MovieStats movieDetails={movieDetails} />
+        <HStack spacing='8' flexBasis='70%'>
+          <MovieOverview movieDetails={movieDetails} />
+          <Divider orientation='vertical' h='200' />
+          <MovieStats movieDetails={movieDetails} />
+        </HStack>
       </Stack>
     </Center>
   );
 };
-
-const ChakraImage = chakra(NextImage, {
-  shouldForwardProp: (prop) => ['width', 'height', 'src'].includes(prop),
-});
 
 export default MovieHeader;

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import {
   Heading,
@@ -11,19 +10,23 @@ import {
 } from '@chakra-ui/react';
 import { AiFillStar } from 'react-icons/ai';
 
+import WrapperImage from './WrapperImage';
 import { MovieSummary } from '../lib/types';
+import { IMAGE_URL } from '../lib/constants';
+import { formatReleaseDate } from '../lib/util/format';
 
 type MovieCardProps = { movieSummary: MovieSummary };
 
 const MovieCard = ({ movieSummary }: MovieCardProps) => {
   return (
-    <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
+    <LinkBox roundedBottom='lg' shadow='md'>
       <Link href={`/movies/${movieSummary.slug}`} passHref>
         <LinkOverlay>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/original${movieSummary.posterPath}`}
+          <WrapperImage
+            src={IMAGE_URL + movieSummary.posterPath}
             width={300}
             height={450}
+            roundedTop='lg'
           />
         </LinkOverlay>
       </Link>
@@ -36,11 +39,7 @@ const MovieCard = ({ movieSummary }: MovieCardProps) => {
           {movieSummary.title}
         </Heading>
         <Text fontSize='sm' color='gray.500'>
-          {new Date(movieSummary.releaseDate).toLocaleDateString('en-US', {
-            month: 'short',
-            day: '2-digit',
-            year: 'numeric',
-          })}
+          {formatReleaseDate(movieSummary.releaseDate)}
         </Text>
       </VStack>
     </LinkBox>

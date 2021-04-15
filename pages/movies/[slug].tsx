@@ -1,10 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Flex } from '@chakra-ui/react';
 
 import MovieHeader from '../../components/MovieHeader';
 import Meta from '../../components/Meta';
 import { MovieDetails } from '../../lib/types';
 import { fetchMovie, fetchMovies } from '../../lib/util/fetch';
+import CastList from '../../components/CastList';
+import ReviewList from '../../components/ReviewList';
 
 type MoviePageProps = { movieDetails: MovieDetails };
 
@@ -13,6 +15,8 @@ const MoviePage = ({ movieDetails }: MoviePageProps) => {
     <Box>
       <Meta title={movieDetails.title} />
       <MovieHeader movieDetails={movieDetails} />
+      <CastList cast={movieDetails.actors} />
+      <ReviewList reviews={movieDetails.reviews} />
     </Box>
   );
 };

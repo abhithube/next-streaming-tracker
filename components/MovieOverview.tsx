@@ -14,24 +14,23 @@ import {
 import { MovieDetails } from '../lib/types';
 import {
   formatRating,
+  formatReleaseDate,
   formatReleaseYear,
   formatRuntime,
 } from '../lib/util/format';
-import { LOGO_URL } from '../lib/constants';
+import { IMAGE_URL } from '../lib/constants';
 
 type MovieOverviewProps = { movieDetails: MovieDetails };
 
 const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
   return (
-    <Flex direction='column' align='flex-start' flexBasis='50%'>
-      <HStack mb='2'>
-        <Heading as='h1'>
-          {movieDetails.title}{' '}
-          <Text as='span' fontWeight='normal' color='gray.400'>
-            ({formatReleaseYear(movieDetails.releaseDate)})
-          </Text>
-        </Heading>
-      </HStack>
+    <Flex direction='column' align='flex-start' flexBasis='80%'>
+      <Heading as='h1' mb='4'>
+        {`${movieDetails.title} `}
+        <Text as='span' fontWeight='normal' color='gray.400'>
+          ({formatReleaseYear(movieDetails.releaseDate)})
+        </Text>
+      </Heading>
       <HStack h='6' mb='6'>
         <Badge
           variant='outline'
@@ -40,7 +39,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
         >
           {movieDetails.ageRating}
         </Badge>
-        <Text>{movieDetails.voteAverage}</Text>
+        <Text>{formatReleaseDate(movieDetails.releaseDate)}</Text>
         <Divider orientation='vertical' />
         <Text>{movieDetails.genres}</Text>
         {movieDetails.runtime && (
@@ -59,7 +58,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
           bgColor='gray.900'
           border='1px'
           borderColor='gray.600'
-          borderRadius='2xl'
+          rounded='2xl'
         >
           <Heading as='h3' fontSize='lg'>
             NOW STREAMING ON
@@ -67,10 +66,10 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
           {movieDetails.providers.map((provider) => (
             <Fragment key={provider.id}>
               <Image
-                src={`${LOGO_URL + provider.logoPath}`}
+                src={IMAGE_URL + provider.logoPath}
                 w='45px'
                 height='45px'
-                borderRadius='md'
+                rounded='md'
               />
             </Fragment>
           ))}

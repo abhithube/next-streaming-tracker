@@ -7,7 +7,7 @@ import Meta from '../../components/Meta';
 import { TVShowSummary } from '../../lib/types';
 import { fetchTVShows } from '../../lib/util/fetch';
 
-export type TVShowsPageProps = { tvShows: TVShowSummary[] };
+type TVShowsPageProps = { tvShows: TVShowSummary[] };
 
 const TVShowsPage = ({ tvShows }: TVShowsPageProps) => {
   return (

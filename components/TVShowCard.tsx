@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Heading,
   HStack,
@@ -11,19 +10,22 @@ import {
 } from '@chakra-ui/react';
 import { AiFillStar } from 'react-icons/ai';
 
+import WrapperImage from './WrapperImage';
 import { TVShowSummary } from '../lib/types';
+import { IMAGE_URL } from '../lib/constants';
 
 type TVShowCardProps = { tvShowSummary: TVShowSummary };
 
 const TVShowCard = ({ tvShowSummary }: TVShowCardProps) => {
   return (
-    <LinkBox borderRadius='lg' overflow='hidden' borderWidth='thin' shadow='md'>
+    <LinkBox roundedBottom='lg' shadow='md'>
       <Link href={`/tv/${tvShowSummary.slug}`} passHref>
         <LinkOverlay>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/original${tvShowSummary.posterPath}`}
+          <WrapperImage
+            src={IMAGE_URL + tvShowSummary.posterPath}
             width={300}
             height={450}
+            roundedTop='lg'
           />
         </LinkOverlay>
       </Link>

@@ -7,20 +7,12 @@ type MovieStatsProps = { movieDetails: MovieDetails };
 
 const MovieStats = ({ movieDetails }: MovieStatsProps) => {
   return (
-    <VStack align='flex-start' spacing='4'>
+    <VStack align='flex-start' spacing='4' flexBasis='20%'>
       <Box>
         <Heading as='h3' fontSize='xl'>
           Status
         </Heading>
         <Text color='gray.400'>{movieDetails.status}</Text>
-      </Box>
-      <Box>
-        <Heading as='h3' fontSize='xl'>
-          Release Date
-        </Heading>
-        <Text color='gray.400'>
-          {formatReleaseYear(movieDetails.releaseDate)}
-        </Text>
       </Box>
       <Box>
         <Heading as='h3' fontSize='xl'>
