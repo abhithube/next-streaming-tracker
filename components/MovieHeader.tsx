@@ -30,6 +30,7 @@ const MovieHeader = ({ movieDetails }: MovieHeaderProps) => {
         <VStack spacing='4' flexBasis='30%'>
           <WrapperImage
             src={IMAGE_URL + movieDetails.posterPath}
+            alt={movieDetails.title}
             width='300'
             height='450'
             minW='300'

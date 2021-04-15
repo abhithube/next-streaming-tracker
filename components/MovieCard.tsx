@@ -24,6 +24,7 @@ const MovieCard = ({ movieSummary }: MovieCardProps) => {
         <LinkOverlay>
           <WrapperImage
             src={IMAGE_URL + movieSummary.posterPath}
+            alt={movieSummary.title}
             width={300}
             height={450}
             roundedTop='lg'

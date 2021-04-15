@@ -29,6 +29,7 @@ const TVShowHeader = ({ tvShowDetails }: TVShowHeaderProps) => {
         <VStack spacing='4' flexBasis='30%'>
           <WrapperImage
             src={IMAGE_URL + tvShowDetails.posterPath}
+            alt={tvShowDetails.name}
             width='300'
             height='450'
             minW='300'

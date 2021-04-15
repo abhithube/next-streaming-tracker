@@ -67,6 +67,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
             <Fragment key={provider.id}>
               <Image
                 src={IMAGE_URL + provider.logoPath}
+                alt={provider.name}
                 w='45px'
                 height='45px'
                 rounded='md'

@@ -13,6 +13,7 @@ const ActorCard = ({ actor }: ActorCardProps) => {
     <Box bgColor='white' rounded='lg' shadow='md' minW='20%' m='2'>
       <WrapperImage
         src={IMAGE_URL + actor.profilePath}
+        alt={actor.name}
         width={300}
         height={450}
         roundedTop='lg'

@@ -23,6 +23,7 @@ const TVShowCard = ({ tvShowSummary }: TVShowCardProps) => {
         <LinkOverlay>
           <WrapperImage
             src={IMAGE_URL + tvShowSummary.posterPath}
+            alt={tvShowSummary.name}
             width={300}
             height={450}
             roundedTop='lg'
