@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Box, Center, Flex } from '@chakra-ui/react';
+import { Box, Center, Divider } from '@chakra-ui/react';
 
 import MovieHeader from '../../components/MovieHeader';
 import Meta from '../../components/Meta';
@@ -15,24 +15,18 @@ const MoviePage = ({ movieDetails }: MoviePageProps) => {
     <Box>
       <Meta title={movieDetails.title} />
       <MovieHeader movieDetails={movieDetails} />
-      <CastList cast={movieDetails.actors} />
-      <ReviewList reviews={movieDetails.reviews} />
+      <Center>
+        <Box w='80%'>
+          <CastList cast={movieDetails.actors} />
+          <Divider borderWidth='2px' borderRadius='xl' />
+          <ReviewList reviews={movieDetails.reviews} />
+        </Box>
+      </Center>
     </Box>
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  try {
-    if (!params || !params.slug) return { notFound: true };
-    const movieDetails = await fetchMovie(params.slug.toString().split('-')[0]);
-
-    if (!movieDetails) return { notFound: true };
-
-    return { props: { movieDetails } };
-  } catch (error) {
-    return { notFound: true };
-  }
-};
+export default MoviePage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const movies = await fetchMovies();
@@ -41,10 +35,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return { params: { slug: movie.slug } };
   });
 
-  return {
-    paths,
-    fallback: 'blocking',
-  };
+  return { paths, fallback: 'blocking' };
 };
 
-export default MoviePage;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params?.slug) return { notFound: true };
+  try {
+    const movieDetails = await fetchMovie(params.slug.toString().split('-')[0]);
+
+    if (!movieDetails) return { notFound: true };
+
+    return { props: { movieDetails } };
+  } catch (err) {
+    return { notFound: true };
+  }
+};
