@@ -60,9 +60,9 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
           borderColor='gray.600'
           rounded='2xl'
         >
-          <Heading as='h3' fontSize='lg'>
+          <Text fontWeight='bold' fontSize='lg'>
             NOW STREAMING ON
-          </Heading>
+          </Text>
           {movieDetails.providers.map((provider) => (
             <Fragment key={provider.id}>
               <Image
@@ -76,7 +76,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
           ))}
         </HStack>
       )}
-      <Heading as='h3' fontSize='xl' mb='2'>
+      <Heading fontSize='xl' mb='2'>
         Overview
       </Heading>
       <Text mb='6' color='gray.400'>

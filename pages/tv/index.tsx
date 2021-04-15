@@ -12,7 +12,10 @@ type TVShowsPageProps = { tvShows: TVShowSummary[] };
 const TVShowsPage = ({ tvShows }: TVShowsPageProps) => {
   return (
     <Container maxW='80%' mt='8' mb='16'>
-      <Meta title='TV Shows' />
+      <Meta
+        title='TV Shows'
+        description='Popular TV shows currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'
+      />
       <Heading as='h1' mb='4'>
         Popular TV Shows
       </Heading>

@@ -55,7 +55,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           </HStack>
         )}
       </HStack>
-      <Text fontSize='sm' color='gray.500' mb='4'>
+      <Text fontSize='sm' color='gray.600' mb='4'>
         Published on {formatReleaseDate(review.createdAt)}
       </Text>
       <Text noOfLines={shouldShowMore ? 0 : 5} whiteSpace='pre-line'>

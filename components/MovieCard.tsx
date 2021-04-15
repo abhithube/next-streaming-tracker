@@ -20,26 +20,26 @@ type MovieCardProps = { movieSummary: MovieSummary };
 const MovieCard = ({ movieSummary }: MovieCardProps) => {
   return (
     <LinkBox roundedBottom='lg' shadow='md'>
-      <Link href={`/movies/${movieSummary.slug}`} passHref>
-        <LinkOverlay>
-          <WrapperImage
-            src={IMAGE_URL + movieSummary.posterPath}
-            alt={movieSummary.title}
-            width={300}
-            height={450}
-            roundedTop='lg'
-          />
-        </LinkOverlay>
-      </Link>
+      <WrapperImage
+        src={IMAGE_URL + movieSummary.posterPath}
+        alt={movieSummary.title}
+        width={300}
+        height={450}
+        roundedTop='lg'
+      />
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
           <Text>{movieSummary.voteAverage}</Text>
         </HStack>
-        <Heading as='h3' fontSize='xl' noOfLines={2}>
-          {movieSummary.title}
-        </Heading>
-        <Text fontSize='sm' color='gray.500'>
+        <Link href={`/movies/${movieSummary.slug}`} passHref>
+          <LinkOverlay>
+            <Heading fontSize='xl' noOfLines={2}>
+              {movieSummary.title}
+            </Heading>
+          </LinkOverlay>
+        </Link>
+        <Text fontSize='sm' color='gray.600'>
           {formatReleaseDate(movieSummary.releaseDate)}
         </Text>
       </VStack>

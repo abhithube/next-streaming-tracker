@@ -1,15 +1,14 @@
 import Head from 'next/head';
 
-type MetaProps = { title?: string };
+type MetaProps = { title: string; description: string };
 
-const Meta = ({ title }: MetaProps) => {
+const Meta = ({ title, description }: MetaProps) => {
   return (
-    <div>
-      <Head>
-        <title>{title ? `${title} | StreamDB` : 'StreamDB'}</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-    </div>
+    <Head>
+      <title>{title + (title === 'StreamDB' ? '' : ' | StreamDB')}</title>
+      <meta name='description' content={description} />
+      <link rel='icon' href='/favicon.ico' />
+    </Head>
   );
 };
 

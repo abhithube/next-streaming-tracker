@@ -12,7 +12,10 @@ type MoviesPageProps = { movies: MovieSummary[] };
 const MoviesPage = ({ movies }: MoviesPageProps) => {
   return (
     <Container maxW='80%' mt='8' mb='16'>
-      <Meta title='Movies' />
+      <Meta
+        title='Movies'
+        description='Popular movies currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'
+      />
       <Heading as='h1' mb='4'>
         Popular Movies
       </Heading>

@@ -13,7 +13,7 @@ type MoviePageProps = { movieDetails: MovieDetails };
 const MoviePage = ({ movieDetails }: MoviePageProps) => {
   return (
     <Box>
-      <Meta title={movieDetails.title} />
+      <Meta title={movieDetails.title} description={movieDetails.overview} />
       <MovieHeader movieDetails={movieDetails} />
       <Center>
         <Box w='80%'>

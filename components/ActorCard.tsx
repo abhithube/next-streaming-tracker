@@ -22,7 +22,7 @@ const ActorCard = ({ actor }: ActorCardProps) => {
         <Heading as='h3' fontSize='xl' noOfLines={2}>
           {actor.name}
         </Heading>
-        <Text fontSize='sm' color='gray.500'>
+        <Text fontSize='sm' color='gray.600'>
           {actor.character}
         </Text>
       </VStack>

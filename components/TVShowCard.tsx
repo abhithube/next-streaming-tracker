@@ -19,26 +19,26 @@ type TVShowCardProps = { tvShowSummary: TVShowSummary };
 const TVShowCard = ({ tvShowSummary }: TVShowCardProps) => {
   return (
     <LinkBox roundedBottom='lg' shadow='md'>
-      <Link href={`/tv/${tvShowSummary.slug}`} passHref>
-        <LinkOverlay>
-          <WrapperImage
-            src={IMAGE_URL + tvShowSummary.posterPath}
-            alt={tvShowSummary.name}
-            width={300}
-            height={450}
-            roundedTop='lg'
-          />
-        </LinkOverlay>
-      </Link>
+      <WrapperImage
+        src={IMAGE_URL + tvShowSummary.posterPath}
+        alt={tvShowSummary.name}
+        width={300}
+        height={450}
+        roundedTop='lg'
+      />
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
           <Text>{tvShowSummary.voteAverage}</Text>
         </HStack>
-        <Heading as='h3' fontSize='xl' noOfLines={2}>
-          {tvShowSummary.name}
-        </Heading>
-        <Text fontSize='sm' color='gray.500'>
+        <Link href={`/tv/${tvShowSummary.slug}`} passHref>
+          <LinkOverlay>
+            <Heading fontSize='xl' noOfLines={2}>
+              {tvShowSummary.name}
+            </Heading>
+          </LinkOverlay>
+        </Link>
+        <Text fontSize='sm' color='gray.600'>
           {new Date(tvShowSummary.firstAirDate).toLocaleDateString('en-US', {
             month: 'short',
             day: '2-digit',

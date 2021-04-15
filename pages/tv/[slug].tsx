@@ -13,7 +13,7 @@ type TVShowPageProps = { tvShowDetails: TVShowDetails };
 const TVShowPage = ({ tvShowDetails }: TVShowPageProps) => {
   return (
     <Box>
-      <Meta title={tvShowDetails.name} />
+      <Meta title={tvShowDetails.name} description={tvShowDetails.overview} />
       <TVShowHeader tvShowDetails={tvShowDetails} />
       <Center>
         <Box w='80%'>
