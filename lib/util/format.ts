@@ -10,21 +10,39 @@ export const formatCurrency = (data: number) => {
 };
 
 export const formatRuntime = (data: number) => {
-  return `${Math.floor(data / 60)}h ${data % 60}m`;
+  const hour = Math.floor(data / 60);
+  const min = data % 60;
+
+  return hour > 0 ? `${hour}hr ${min}min` : `${min}min`;
 };
 
-export const formatRating = (data: string) => {
+export const formatMovieRating = (data: string) => {
   switch (data) {
     case 'PG-13':
       return 'yellow';
     case 'R':
       return 'red';
     case 'PG':
-      return 'green';
     case 'G':
-      return 'blue';
+      return 'green';
     case 'NC-17':
       return 'purple';
+    default:
+      return 'gray';
+  }
+};
+
+export const formatTVRating = (data: string) => {
+  switch (data) {
+    case 'TV-MA':
+      return 'red';
+    case 'TV-14':
+      return 'yellow';
+    case 'TV-PG':
+    case 'TV-G':
+    case 'TV-Y7':
+    case 'TV-Y':
+      return 'green';
     default:
       return 'gray';
   }

@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-import { MovieDetails } from '../types';
+import { MovieDetails, TVShowDetails } from '../types';
 import {
-  parseAgeRating,
+  parseMovieCertification,
+  parseTVShowCertification,
   parseActors,
-  parseCreators,
+  parseMovieCreators,
+  parseTVShowCreators,
   parseGenres,
   parseMovies,
   parseProviders,
@@ -43,10 +45,10 @@ export const fetchMovie = async (id: string) => {
     },
   });
 
-  const ageRating = parseAgeRating(data.release_dates.results);
+  const ageRating = parseMovieCertification(data.release_dates.results);
   const genres = parseGenres(data.genres);
   const studio = parseStudio(data.production_companies);
-  const creators = parseCreators(data.credits.crew);
+  const creators = parseMovieCreators(data.credits.crew);
   const actors = parseActors(data.credits.cast);
   const reviews = parseReviews(data.reviews.results);
   const providers = parseProviders(data['watch/providers'].results);
@@ -75,4 +77,41 @@ export const fetchMovie = async (id: string) => {
   };
 
   return movieDetails;
+};
+
+export const fetchTVShow = async (id: string) => {
+  const { data } = await axios.get(`/tv/${id}`, {
+    params: {
+      append_to_response: 'content_ratings,credits,reviews,watch/providers',
+    },
+  });
+
+  const ageRating = parseTVShowCertification(data.content_ratings.results);
+  const genres = parseGenres(data.genres);
+  const creators = parseTVShowCreators(data.created_by);
+  const actors = parseActors(data.credits.cast);
+  const reviews = parseReviews(data.reviews.results);
+  const providers = parseProviders(data['watch/providers'].results);
+
+  const tvShowDetails: TVShowDetails = {
+    id: data.id,
+    name: data.name,
+    posterPath: data.poster_path,
+    voteAverage: data.vote_average,
+    voteCount: data.vote_count,
+    backdropPath: data.backdrop_path,
+    overview: data.overview,
+    tagline: data.tagline,
+    ageRating,
+    runtime: data.episode_run_time,
+    genres,
+    status: data.status,
+    firstAirDate: data.first_air_date,
+    creators,
+    actors,
+    reviews,
+    providers,
+  };
+
+  return tvShowDetails;
 };

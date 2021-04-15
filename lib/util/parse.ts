@@ -35,11 +35,15 @@ export const parseTVShows = (data: any[]): TVShowSummary[] => {
   });
 };
 
-export const parseAgeRating = (data: any[]): string => {
+export const parseMovieCertification = (data: any[]): string => {
   const usReleases = data.find(({ iso_3166_1 }) => iso_3166_1 === 'US')
     .release_dates;
 
   return usReleases[usReleases.length - 1].certification;
+};
+
+export const parseTVShowCertification = (data: any[]): string => {
+  return data.find(({ iso_3166_1 }) => iso_3166_1 === 'US').rating;
 };
 
 export const parseGenres = (data: any[]) => {
@@ -51,7 +55,7 @@ export const parseStudio = (data: any[]): string => {
   else return '';
 };
 
-export const parseCreators = (data: any[]): Creator[] => {
+export const parseMovieCreators = (data: any[]): Creator[] => {
   let creators: Creator[] = data.reduce((filtered: Creator[], creator) => {
     if (['Director', 'Screenplay', 'Story', 'Writer'].includes(creator.job)) {
       const elem = filtered.find(({ id }) => id === creator.id);
@@ -68,6 +72,10 @@ export const parseCreators = (data: any[]): Creator[] => {
   if (creators.length > 6) creators = creators.slice(0, 6);
 
   return creators;
+};
+
+export const parseTVShowCreators = (data: any[]): string[] => {
+  return data.map((creator) => creator.name);
 };
 
 export const parseActors = (data: any[]) => {

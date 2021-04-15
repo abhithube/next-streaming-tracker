@@ -28,13 +28,7 @@ export type MovieDetails = {
   ageRating: string;
   runtime: number | null;
   genres: string;
-  status:
-    | 'Rumored'
-    | 'Planned'
-    | 'In Production'
-    | 'Post Production'
-    | 'Released'
-    | 'Canceled';
+  status: string;
   releaseDate: string;
   budget: number;
   revenue: number;
@@ -45,10 +39,30 @@ export type MovieDetails = {
   providers: Provider[];
 };
 
+export type TVShowDetails = {
+  id: number;
+  name: string;
+  posterPath: string | null;
+  voteAverage: number;
+  voteCount: number;
+  backdropPath: string | null;
+  overview: string;
+  tagline: string;
+  ageRating: string;
+  runtime: number;
+  genres: string;
+  status: string;
+  firstAirDate: string;
+  creators: string[];
+  actors: Actor[];
+  reviews: Review[];
+  providers: Provider[];
+};
+
 export type Creator = {
   id: number;
   name: string;
-  job: 'Director' | 'Screenplay' | 'Story' | 'Writer';
+  job: 'Creator' | 'Director' | 'Screenplay' | 'Story' | 'Writer';
 };
 
 export type Actor = {
