@@ -1,7 +1,7 @@
-import { Box, Heading, Text, VStack } from '@chakra-ui/layout';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 
 import { MovieDetails } from '../lib/types';
-import { formatCurrency, formatReleaseYear } from '../lib/util/format';
+import { formatCurrency } from '../lib/util/format';
 
 type MovieStatsProps = { movieDetails: MovieDetails };
 

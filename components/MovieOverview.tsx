@@ -13,7 +13,7 @@ import {
 
 import { MovieDetails } from '../lib/types';
 import {
-  formatRating,
+  formatMovieRating,
   formatReleaseDate,
   formatReleaseYear,
   formatRuntime,
@@ -35,7 +35,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
         <Badge
           variant='outline'
           fontSize='sm'
-          colorScheme={formatRating(movieDetails.ageRating)}
+          colorScheme={formatMovieRating(movieDetails.ageRating)}
         >
           {movieDetails.ageRating}
         </Badge>

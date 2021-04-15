@@ -1,19 +1,10 @@
-import {
-  Center,
-  Divider,
-  Heading,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Center, Divider, HStack, Stack, Text, VStack } from '@chakra-ui/react';
 
 import MovieStats from './MovieStats';
 import MovieOverview from './MovieOverview';
 import WrapperImage from './WrapperImage';
 import { MovieDetails } from '../lib/types';
 import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
-import { formatReleaseYear } from '../lib/util/format';
 
 type MovieHeaderProps = { movieDetails: MovieDetails };
 
@@ -21,7 +12,7 @@ const MovieHeader = ({ movieDetails }: MovieHeaderProps) => {
   return (
     <Center
       bgImg={`
-        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url(${
           BACKDROP_URL + movieDetails.backdropPath
         })
       `}

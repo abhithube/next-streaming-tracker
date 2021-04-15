@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useRef } from 'react';
-import { Box, Flex, Heading } from '@chakra-ui/layout';
+import { Fragment } from 'react';
+import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 
 import { Actor } from '../lib/types';
 import ActorCard from './ActorCard';
@@ -9,22 +9,18 @@ type CastListProps = {
 };
 
 const CastList = ({ cast }: CastListProps) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-
   return (
-    <Box className='bork' w='100%' pos='relative'>
-      <Heading>Top Billed Cast</Heading>
-      <Flex
-        overflowX='auto'
-        css={{ scrollSnapType: 'x mandatory' }}
-        ref={scrollRef}
-      >
-        {cast.map((actor) => (
-          <Fragment key={actor.id}>
-            <ActorCard actor={actor} />
-          </Fragment>
-        ))}
-      </Flex>
+    <Box my='8'>
+      <Heading mb='4'>Top Billed Cast</Heading>
+      <Box bgColor='gray.100' p='4' rounded='lg'>
+        <Flex overflowX='auto'>
+          {cast.map((actor) => (
+            <Fragment key={actor.id}>
+              <ActorCard actor={actor} />
+            </Fragment>
+          ))}
+        </Flex>
+      </Box>
     </Box>
   );
 };

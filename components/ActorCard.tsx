@@ -1,4 +1,4 @@
-import { Box, Heading, Text, VStack } from '@chakra-ui/layout';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 
 import WrapperImage from './WrapperImage';
 import { Actor } from '../lib/types';
@@ -10,13 +10,7 @@ type ActorCardProps = {
 
 const ActorCard = ({ actor }: ActorCardProps) => {
   return (
-    <Box
-      roundedBottom='lg'
-      shadow='md'
-      minW='20%'
-      m='2'
-      css={{ scrollSnapAlign: 'start' }}
-    >
+    <Box bgColor='white' rounded='lg' shadow='md' minW='20%' m='2'>
       <WrapperImage
         src={IMAGE_URL + actor.profilePath}
         width={300}
