@@ -8,9 +8,9 @@ import {
   parseGenres,
   parseMovies,
   parseProviders,
-  parseRecommendations,
   parseStudio,
   parseTVShows,
+  parseReviews,
 } from './parse';
 import { SUPPORTED_PROVIDERS } from '../constants';
 
@@ -39,8 +39,7 @@ export const fetchTVShows = async () => {
 export const fetchMovie = async (id: string) => {
   const { data } = await axios.get(`/movie/${id}`, {
     params: {
-      append_to_response:
-        'release_dates,recommendations,credits,watch/providers',
+      append_to_response: 'release_dates,credits,reviews,watch/providers',
     },
   });
 
@@ -49,7 +48,7 @@ export const fetchMovie = async (id: string) => {
   const studio = parseStudio(data.production_companies);
   const creators = parseCreators(data.credits.crew);
   const actors = parseActors(data.credits.cast);
-  const recommendations = parseRecommendations(data.recommendations.results);
+  const reviews = parseReviews(data.reviews.results);
   const providers = parseProviders(data['watch/providers'].results);
 
   const movieDetails: MovieDetails = {
@@ -71,7 +70,7 @@ export const fetchMovie = async (id: string) => {
     studio,
     creators,
     actors,
-    recommendations,
+    reviews,
     providers,
   };
 

@@ -35,5 +35,9 @@ export const formatReleaseYear = (data: string) => {
 };
 
 export const formatReleaseDate = (data: string) => {
-  return new Date(data).toLocaleDateString();
+  return new Date(data).toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  });
 };

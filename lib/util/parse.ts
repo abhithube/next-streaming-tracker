@@ -3,6 +3,7 @@ import {
   Creator,
   MovieSummary,
   Provider,
+  Review,
   TVShowSummary,
 } from '../types';
 import { SUPPORTED_PROVIDERS } from '../constants';
@@ -69,10 +70,8 @@ export const parseCreators = (data: any[]): Creator[] => {
   return creators;
 };
 
-export const parseActors = (data: any[]): Actor[] => {
-  if (data.length > 20) data = data.slice(0, 20);
-
-  return data.reduce((filtered: Actor[], actor) => {
+export const parseActors = (data: any[]) => {
+  const cast: Actor[] = data.reduce((filtered: Actor[], actor) => {
     if (actor.profile_path) {
       const { id, name, character } = actor;
       filtered.push({
@@ -85,19 +84,21 @@ export const parseActors = (data: any[]): Actor[] => {
 
     return filtered;
   }, []);
+
+  return cast.slice(0, 20);
 };
 
-export const parseRecommendations = (data: any[]): MovieSummary[] => {
-  if (data.length > 5) data = data.slice(0, 5);
+export const parseReviews = (data: any[]): Review[] => {
+  data = data.slice(0, 3);
 
-  return data.map((movie) => {
+  return data.map((review) => {
     return {
-      id: movie.id,
-      title: movie.title,
-      slug: generateSlug(movie.id, movie.title),
-      posterPath: movie.poster_path,
-      releaseDate: movie.release_date,
-      voteAverage: movie.vote_average,
+      id: review.id,
+      content: review.content,
+      createdAt: review.created_at,
+      author: review.author_details.username,
+      avatarPath: review.author_details.avatar_path,
+      rating: review.author_details.rating,
     };
   });
 };

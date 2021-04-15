@@ -41,7 +41,7 @@ export type MovieDetails = {
   studio: string;
   creators: Creator[];
   actors: Actor[];
-  recommendations: MovieSummary[];
+  reviews: Review[];
   providers: Provider[];
 };
 
@@ -56,6 +56,15 @@ export type Actor = {
   name: string;
   character: string;
   profilePath: string;
+};
+
+export type Review = {
+  id: number;
+  content: string;
+  createdAt: string;
+  author: string;
+  avatarPath: string | null;
+  rating: number | null;
 };
 
 export type Provider = {
