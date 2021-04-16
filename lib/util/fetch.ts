@@ -16,11 +16,19 @@ import {
 } from './parse';
 import { SUPPORTED_PROVIDERS } from '../constants';
 
-export const fetchMovies = async ({ page }: { page: number }) => {
+type DiscoverRequest = {
+  page: number;
+  providers?: any[];
+};
+
+export const fetchMovies = async ({
+  page,
+  providers = SUPPORTED_PROVIDERS,
+}: DiscoverRequest) => {
   const { data } = await axios.get('/discover/movie', {
     params: {
       page,
-      with_watch_providers: SUPPORTED_PROVIDERS.join('|'),
+      with_watch_providers: providers.map((provider) => provider.id).join('|'),
       watch_region: 'US',
     },
   });
@@ -30,11 +38,14 @@ export const fetchMovies = async ({ page }: { page: number }) => {
   return { movies: parseMovies(data.results), pageCount };
 };
 
-export const fetchTVShows = async ({ page }: { page: number }) => {
+export const fetchTVShows = async ({
+  page,
+  providers = SUPPORTED_PROVIDERS,
+}: DiscoverRequest) => {
   const { data } = await axios.get('/discover/tv', {
     params: {
       page,
-      with_watch_providers: SUPPORTED_PROVIDERS.join('|'),
+      with_watch_providers: providers.map((provider) => provider.id).join('|'),
       watch_region: 'US',
     },
   });

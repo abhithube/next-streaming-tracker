@@ -59,3 +59,10 @@ export const formatReleaseDate = (data: string) => {
     year: 'numeric',
   });
 };
+
+export const formatProviders = (data: any[]) => {
+  return data.sort((a, b) => {
+    if (a.id > b.id) return 1;
+    else return -1;
+  });
+};

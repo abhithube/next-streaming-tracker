@@ -82,5 +82,5 @@ export type Review = {
 export type Provider = {
   id: number;
   name: string;
-  logoPath: string;
+  logoPath?: string;
 };

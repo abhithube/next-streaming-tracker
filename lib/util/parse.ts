@@ -108,11 +108,13 @@ export const parseReviews = (data: any[]): Review[] => {
   });
 };
 
+const providers = SUPPORTED_PROVIDERS.map(({ id }) => id);
+
 export const parseProviders = (data: any): Provider[] => {
   if (!data.US.flatrate) return [];
 
   return data.US.flatrate.reduce((filtered: Provider[], provider: any) => {
-    if (SUPPORTED_PROVIDERS.includes(provider.provider_id)) {
+    if (providers.includes(provider.provider_id)) {
       filtered.push({
         id: provider.provider_id,
         name: provider.provider_name,
