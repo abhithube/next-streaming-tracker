@@ -29,19 +29,18 @@ const MoviePage = ({ movieDetails }: MoviePageProps) => {
 export default MoviePage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const movies = await fetchMovies();
+  const { movies } = await fetchMovies({ page: 1 });
 
   const paths = movies.map((movie) => {
-    return { params: { slug: movie.slug } };
+    return { params: { id: movie.id.toString() } };
   });
 
   return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params?.slug) return { notFound: true };
   try {
-    const movieDetails = await fetchMovie(params.slug.toString().split('-')[0]);
+    const movieDetails = await fetchMovie(params!.id as string);
 
     if (!movieDetails) return { notFound: true };
 

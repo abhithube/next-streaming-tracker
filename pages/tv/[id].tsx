@@ -28,25 +28,20 @@ const TVShowPage = ({ tvShowDetails }: TVShowPageProps) => {
 export default TVShowPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const shows = await fetchTVShows();
+  const { tvShows } = await fetchTVShows({ page: 1 });
 
-  const paths = shows.map((show) => {
-    return { params: { slug: show.slug } };
+  const paths = tvShows.map((show) => {
+    return { params: { id: show.id.toString() } };
   });
 
   return { paths, fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params?.slug) return { notFound: true };
   try {
-    const tvShowDetails = await fetchTVShow(
-      params.slug.toString().split('-')[0]
-    );
+    const tvShowDetails = await fetchTVShow(params!.id as string);
 
     if (!tvShowDetails) return { notFound: true };
-
-    console.log(tvShowDetails);
 
     return { props: { tvShowDetails } };
   } catch (err) {

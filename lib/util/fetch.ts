@@ -16,26 +16,32 @@ import {
 } from './parse';
 import { SUPPORTED_PROVIDERS } from '../constants';
 
-export const fetchMovies = async () => {
+export const fetchMovies = async ({ page }: { page: number }) => {
   const { data } = await axios.get('/discover/movie', {
     params: {
+      page,
       with_watch_providers: SUPPORTED_PROVIDERS.join('|'),
       watch_region: 'US',
     },
   });
 
-  return parseMovies(data.results);
+  const pageCount: number = data.total_pages;
+
+  return { movies: parseMovies(data.results), pageCount };
 };
 
-export const fetchTVShows = async () => {
+export const fetchTVShows = async ({ page }: { page: number }) => {
   const { data } = await axios.get('/discover/tv', {
     params: {
+      page,
       with_watch_providers: SUPPORTED_PROVIDERS.join('|'),
       watch_region: 'US',
     },
   });
 
-  return parseTVShows(data.results);
+  const pageCount: number = data.total_pages;
+
+  return { tvShows: parseTVShows(data.results), pageCount };
 };
 
 export const fetchMovie = async (id: string) => {

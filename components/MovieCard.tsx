@@ -32,7 +32,7 @@ const MovieCard = ({ movieSummary }: MovieCardProps) => {
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
           <Text>{movieSummary.voteAverage}</Text>
         </HStack>
-        <Link href={`/movies/${movieSummary.slug}`} passHref>
+        <Link href={`/movies/${movieSummary.id}`} passHref>
           <LinkOverlay>
             <Heading fontSize='xl' noOfLines={2}>
               {movieSummary.title}

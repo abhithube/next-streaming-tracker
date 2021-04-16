@@ -7,14 +7,12 @@ import {
   TVShowSummary,
 } from '../types';
 import { SUPPORTED_PROVIDERS } from '../constants';
-import generateSlug from './slugify';
 
 export const parseMovies = (data: any[]): MovieSummary[] => {
   return data.map((movie) => {
     return {
       id: movie.id,
       title: movie.title,
-      slug: generateSlug(movie.id, movie.title),
       posterPath: movie.poster_path,
       releaseDate: movie.release_date,
       voteAverage: movie.vote_average,
@@ -27,7 +25,6 @@ export const parseTVShows = (data: any[]): TVShowSummary[] => {
     return {
       id: show.id,
       name: show.name,
-      slug: generateSlug(show.id, show.name),
       posterPath: show.poster_path,
       firstAirDate: show.first_air_date,
       voteAverage: show.vote_average,
