@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { MovieDetails, TVShowDetails } from '../types';
+import { Genre, MovieDetails, Provider, TVShowDetails } from '../types';
 import {
   parseMovieCertification,
   parseTVShowCertification,
@@ -18,20 +18,28 @@ import { SUPPORTED_PROVIDERS } from '../constants';
 
 type DiscoverRequest = {
   page: number;
-  providers?: any[];
+  genres?: Provider[];
+  providers?: Provider[];
 };
 
 export const fetchMovies = async ({
   page,
-  providers = SUPPORTED_PROVIDERS,
+  genres,
+  providers,
 }: DiscoverRequest) => {
-  const { data } = await axios.get('/discover/movie', {
-    params: {
-      page,
-      with_watch_providers: providers.map((provider) => provider.id).join('|'),
-      watch_region: 'US',
-    },
-  });
+  let params: any = {
+    page,
+    with_watch_providers: SUPPORTED_PROVIDERS,
+    watch_region: 'US',
+    with_watch_monetization_types: 'flatrate',
+  };
+
+  if (genres) params.with_genres = genres.map(({ id }) => id).join(',');
+  if (providers) {
+    params.with_watch_providers = providers.map(({ id }) => id).join('|');
+  }
+
+  const { data } = await axios.get('/discover/movie', { params });
 
   const pageCount: number = data.total_pages;
 
@@ -40,15 +48,22 @@ export const fetchMovies = async ({
 
 export const fetchTVShows = async ({
   page,
+  genres,
   providers = SUPPORTED_PROVIDERS,
 }: DiscoverRequest) => {
-  const { data } = await axios.get('/discover/tv', {
-    params: {
-      page,
-      with_watch_providers: providers.map((provider) => provider.id).join('|'),
-      watch_region: 'US',
-    },
-  });
+  let params: any = {
+    page,
+    with_watch_providers: SUPPORTED_PROVIDERS,
+    watch_region: 'US',
+    with_watch_monetization_types: 'flatrate',
+  };
+
+  if (genres) params.with_genres = genres.map(({ id }) => id).join(',');
+  if (providers) {
+    params.with_watch_providers = providers.map(({ id }) => id).join('|');
+  }
+
+  const { data } = await axios.get('/discover/tv', { params });
 
   const pageCount: number = data.total_pages;
 
@@ -131,4 +146,9 @@ export const fetchTVShow = async (id: string) => {
   };
 
   return tvShowDetails;
+};
+
+export const fetchGenres = async (type: 'movie' | 'tv'): Promise<Genre[]> => {
+  const { data } = await axios.get(`/genre/${type}/list`);
+  return data.genres;
 };

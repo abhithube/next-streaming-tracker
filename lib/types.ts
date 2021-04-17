@@ -3,7 +3,7 @@ export type MovieSummary = {
   title: string;
   posterPath: string;
   releaseDate: string;
-  voteAverage: string;
+  voteAverage: number;
 };
 
 export type TVShowSummary = {
@@ -11,7 +11,7 @@ export type TVShowSummary = {
   name: string;
   posterPath: string;
   firstAirDate: string;
-  voteAverage: string;
+  voteAverage: number;
 };
 
 export type MovieDetails = {
@@ -83,4 +83,9 @@ export type Provider = {
   id: number;
   name: string;
   logoPath?: string;
+};
+
+export type Genre = {
+  id: number;
+  name: string;
 };

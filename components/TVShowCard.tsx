@@ -29,7 +29,7 @@ const TVShowCard = ({ tvShowSummary }: TVShowCardProps) => {
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
-          <Text>{tvShowSummary.voteAverage}</Text>
+          <Text>{tvShowSummary.voteAverage.toFixed(1)}</Text>
         </HStack>
         <Link href={`/tv/${tvShowSummary.id}`} passHref>
           <LinkOverlay>

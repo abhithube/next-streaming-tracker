@@ -1,3 +1,5 @@
+import { Genre, Provider } from '../types';
+
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -60,9 +62,22 @@ export const formatReleaseDate = (data: string) => {
   });
 };
 
-export const formatProviders = (data: any[]) => {
-  return data.sort((a, b) => {
-    if (a.id > b.id) return 1;
-    else return -1;
-  });
+export const formatProviders = (data: Provider[]) => {
+  return data
+    .sort((a, b) => {
+      if (a.id > b.id) return 1;
+      else return -1;
+    })
+    .map(({ name }) => name)
+    .join(', ');
+};
+
+export const formatGenres = (data: Genre[]) => {
+  return data
+    .sort((a, b) => {
+      if (a.name > b.name) return 1;
+      else return -1;
+    })
+    .map(({ name }) => name)
+    .join(', ');
 };

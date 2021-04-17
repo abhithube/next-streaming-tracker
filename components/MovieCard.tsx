@@ -30,7 +30,7 @@ const MovieCard = ({ movieSummary }: MovieCardProps) => {
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
-          <Text>{movieSummary.voteAverage}</Text>
+          <Text>{movieSummary.voteAverage.toFixed(1)}</Text>
         </HStack>
         <Link href={`/movies/${movieSummary.id}`} passHref>
           <LinkOverlay>

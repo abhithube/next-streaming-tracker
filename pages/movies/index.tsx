@@ -1,40 +1,51 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetStaticProps } from 'next';
-import { useQuery, useQueryClient } from 'react-query';
-import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
 import ProvidersFilter from '../../components/ProvidersFilter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
-import { MovieSummary } from '../../lib/types';
-import { fetchMovies } from '../../lib/util/fetch';
+import useMovies from '../../lib/hooks/useMovies';
+import { Genre, MovieSummary, Provider } from '../../lib/types';
+import { fetchGenres, fetchMovies } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
-import { formatProviders } from '../../lib/util/format';
+import GenresFilter from '../../components/GenresFilter';
+import usePrefetchMovies from '../../lib/hooks/usePrefetchMovies';
 
-type MoviesPageProps = { movies: MovieSummary[]; pageCount: number };
+type MoviesPageProps = {
+  initMovies: MovieSummary[];
+  initPageCount: number;
+  genreList: Genre[];
+  providerList: Provider[];
+};
 
-const MoviesPage = ({ movies, pageCount }: MoviesPageProps) => {
+const MoviesPage = ({
+  initMovies,
+  initPageCount,
+  genreList,
+  providerList,
+}: MoviesPageProps) => {
   const [page, setPage] = useState(1);
-  const [providers, setProviders] = useState(SUPPORTED_PROVIDERS);
+  const [providers, setProviders] = useState<Provider[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
 
-  const queryClient = useQueryClient();
+  const { data, error } = useMovies({
+    page,
+    genres,
+    providers,
+    initialData: { movies: initMovies, pageCount: initPageCount },
+  });
 
-  const { data } = useQuery(
-    ['movies', { page, providers: formatProviders(providers) }],
-    async () => await fetchMovies({ page: page, providers }),
-    { initialData: { movies, pageCount }, keepPreviousData: true }
-  );
+  usePrefetchMovies({ page, providers, genres, pageCount: data!.pageCount });
 
-  useEffect(() => {
-    if (page < data!.pageCount) {
-      queryClient.prefetchQuery(
-        ['movies', { page: page + 1, providers }],
-        async () => await fetchMovies({ page: page + 1, providers }),
-        { staleTime: Infinity }
-      );
-    }
-  }, [data]);
+  if (error)
+    return (
+      <Text>
+        Our selection of movie titles is not available at this time. Try again
+        later.
+      </Text>
+    );
 
   return (
     <Container maxW='80%' mt='8' mb='16'>
@@ -45,27 +56,59 @@ const MoviesPage = ({ movies, pageCount }: MoviesPageProps) => {
       <Heading as='h1' mb='4'>
         Popular Movies
       </Heading>
+      <GenresFilter
+        genreList={genreList}
+        genres={genres}
+        setGenres={setGenres}
+        setPage={setPage}
+      />
       <ProvidersFilter
+        providerList={providerList}
         providers={providers}
         setProviders={setProviders}
         setPage={setPage}
       />
-      <Pagination page={page} pageCount={data!.pageCount} setPage={setPage} />
-      <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
-        {data?.movies.map((movie) => (
-          <Fragment key={movie.id}>
-            <MovieCard movieSummary={movie} />
-          </Fragment>
-        ))}
-      </SimpleGrid>
-      <Pagination page={page} pageCount={data!.pageCount} setPage={setPage} />
+      {data!.movies.length > 0 ? (
+        <>
+          <Pagination
+            page={page}
+            pageCount={data!.pageCount}
+            setPage={setPage}
+          />
+          <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
+            {data!.movies.map((movie) => (
+              <Fragment key={movie.id}>
+                <MovieCard movieSummary={movie} />
+              </Fragment>
+            ))}
+          </SimpleGrid>
+          <Pagination
+            page={page}
+            pageCount={data!.pageCount}
+            setPage={setPage}
+          />
+        </>
+      ) : (
+        <Text>There are no movie titles matching the selected filters.</Text>
+      )}
     </Container>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const props = await fetchMovies({ page: 1 });
-  return { props };
-};
-
 export default MoviesPage;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const [{ movies, pageCount }, genreList] = await Promise.all([
+    fetchMovies({ page: 1 }),
+    fetchGenres('movie'),
+  ]);
+
+  return {
+    props: {
+      initMovies: movies,
+      initPageCount: pageCount,
+      genreList,
+      providerList: SUPPORTED_PROVIDERS,
+    },
+  };
+};
