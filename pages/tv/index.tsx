@@ -1,7 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetStaticProps } from 'next';
-import { useQuery, useQueryClient } from 'react-query';
-import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react';
 
 import TVShowCard from '../../components/TVShowCard';
 import ProvidersFilter from '../../components/ProvidersFilter';
@@ -10,9 +16,7 @@ import Meta from '../../components/Meta';
 import { Genre, Provider, TVShowSummary } from '../../lib/types';
 import { fetchGenres, fetchTVShows } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
-import { formatProviders } from '../../lib/util/format';
 import useTVShows from '../../lib/hooks/useTVShows';
-import usePrefetchTVShows from '../../lib/hooks/usePrefetchTVShows';
 import GenresFilter from '../../components/GenresFilter';
 
 type TVShowsPageProps = {
@@ -22,6 +26,11 @@ type TVShowsPageProps = {
   providerList: Provider[];
 };
 
+type QueryDef = {
+  genres: Genre[];
+  providers: Provider[];
+};
+
 const TVShowsPage = ({
   initTVShows,
   initPageCount,
@@ -29,17 +38,17 @@ const TVShowsPage = ({
   providerList,
 }: TVShowsPageProps) => {
   const [page, setPage] = useState(1);
+
   const [providers, setProviders] = useState<Provider[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
+  const [query, setQuery] = useState<QueryDef>({ genres, providers });
+
   const { data, error } = useTVShows({
     page,
-    genres,
-    providers,
+    query,
     initialData: { tvShows: initTVShows, pageCount: initPageCount },
   });
-
-  usePrefetchTVShows({ page, providers, genres, pageCount: data!.pageCount });
 
   if (error)
     return (
@@ -55,21 +64,31 @@ const TVShowsPage = ({
         title='TV Shows'
         description='Popular TV shows currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'
       />
-      <Heading as='h1' mb='4'>
+      <Heading as='h1' mb='8'>
         Popular TV Shows
       </Heading>
-      <GenresFilter
-        genreList={genreList}
-        genres={genres}
-        setGenres={setGenres}
-        setPage={setPage}
-      />
-      <ProvidersFilter
-        providerList={providerList}
-        providers={providers}
-        setProviders={setProviders}
-        setPage={setPage}
-      />
+      <Flex direction='row' mb='4'>
+        <GenresFilter
+          genreList={genreList}
+          genres={genres}
+          setGenres={setGenres}
+        />
+        <ProvidersFilter
+          providerList={providerList}
+          providers={providers}
+          setProviders={setProviders}
+        />
+      </Flex>
+      <Button
+        onClick={() => {
+          setQuery({ genres, providers });
+          setPage(1);
+        }}
+        w='100%'
+        colorScheme='blue'
+      >
+        Go!
+      </Button>
       {data!.tvShows.length > 0 ? (
         <>
           <Pagination

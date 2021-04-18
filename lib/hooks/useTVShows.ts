@@ -1,41 +1,53 @@
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
-import { Genre, TVShowSummary, Provider } from '../types';
+import { Genre, Provider, TVShowSummary } from '../types';
 import { fetchTVShows } from '../util/fetch';
 import { formatGenres, formatProviders } from '../util/format';
+import { prefetchTVShows } from '../util/prefetch';
 
-type useTVShowsDef = {
+type useMoviesDef = {
   page: number;
-  providers: Provider[];
-  genres: Genre[];
+  query: {
+    genres: Genre[];
+    providers: Provider[];
+  };
   initialData: {
     tvShows: TVShowSummary[];
     pageCount: number;
   };
 };
 
-const useTVShows = ({
-  page,
-  providers,
-  genres,
-  initialData,
-}: useTVShowsDef) => {
+const useTVShows = ({ page, query, initialData }: useMoviesDef) => {
+  const queryClient = useQueryClient();
+
   return useQuery(
     [
       '/tv',
       {
         page,
-        genres: formatGenres(genres),
-        providers: formatProviders(providers),
+        genres: formatGenres(query.genres),
+        providers: formatProviders(query.providers),
       },
     ],
-    async () => await fetchTVShows({ page, genres, providers }),
+    async () =>
+      await fetchTVShows({
+        page,
+        genres: query.genres,
+        providers: query.providers,
+      }),
     {
+      keepPreviousData: true,
       initialData: {
         tvShows: initialData.tvShows,
         pageCount: initialData.pageCount,
       },
-      keepPreviousData: true,
+      onSuccess: () => {
+        prefetchTVShows(query.genres, query.providers, {
+          queryClient,
+          page,
+          pageCount: initialData.pageCount,
+        });
+      },
     }
   );
 };

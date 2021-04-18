@@ -15,10 +15,7 @@ const Pagination = ({ page, pageCount, setPage }: PaginationProps) => {
         aria-label='Previous Page'
         icon={<Icon as={FaChevronLeft} />}
         disabled={page <= 1}
-        onClick={() => {
-          window.scrollTo({ top: 0 });
-          setPage((prevPage: number) => prevPage - 1);
-        }}
+        onClick={() => setPage((prevPage: number) => prevPage - 1)}
       />
       <Text>
         {page} of {pageCount}
@@ -27,10 +24,7 @@ const Pagination = ({ page, pageCount, setPage }: PaginationProps) => {
         aria-label='Next Page'
         icon={<Icon as={FaChevronRight} />}
         disabled={page >= pageCount}
-        onClick={() => {
-          window.scrollTo({ top: 0 });
-          setPage((prevPage: number) => prevPage + 1);
-        }}
+        onClick={() => setPage((prevPage: number) => prevPage + 1)}
       />
     </HStack>
   );

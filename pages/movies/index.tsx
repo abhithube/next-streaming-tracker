@@ -1,6 +1,13 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
-import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
 import ProvidersFilter from '../../components/ProvidersFilter';
@@ -11,13 +18,17 @@ import { Genre, MovieSummary, Provider } from '../../lib/types';
 import { fetchGenres, fetchMovies } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
 import GenresFilter from '../../components/GenresFilter';
-import usePrefetchMovies from '../../lib/hooks/usePrefetchMovies';
 
 type MoviesPageProps = {
   initMovies: MovieSummary[];
   initPageCount: number;
   genreList: Genre[];
   providerList: Provider[];
+};
+
+type QueryDef = {
+  genres: Genre[];
+  providers: Provider[];
 };
 
 const MoviesPage = ({
@@ -27,17 +38,19 @@ const MoviesPage = ({
   providerList,
 }: MoviesPageProps) => {
   const [page, setPage] = useState(1);
-  const [providers, setProviders] = useState<Provider[]>([]);
+
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
+
+  const [query, setQuery] = useState<QueryDef>({ genres, providers });
 
   const { data, error } = useMovies({
     page,
-    genres,
-    providers,
+    query,
     initialData: { movies: initMovies, pageCount: initPageCount },
   });
 
-  usePrefetchMovies({ page, providers, genres, pageCount: data!.pageCount });
+  useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [page]);
 
   if (error)
     return (
@@ -53,21 +66,31 @@ const MoviesPage = ({
         title='Movies'
         description='Popular movies currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'
       />
-      <Heading as='h1' mb='4'>
+      <Heading as='h1' mb='8'>
         Popular Movies
       </Heading>
-      <GenresFilter
-        genreList={genreList}
-        genres={genres}
-        setGenres={setGenres}
-        setPage={setPage}
-      />
-      <ProvidersFilter
-        providerList={providerList}
-        providers={providers}
-        setProviders={setProviders}
-        setPage={setPage}
-      />
+      <Flex direction='row' mb='4'>
+        <GenresFilter
+          genreList={genreList}
+          genres={genres}
+          setGenres={setGenres}
+        />
+        <ProvidersFilter
+          providerList={providerList}
+          providers={providers}
+          setProviders={setProviders}
+        />
+      </Flex>
+      <Button
+        onClick={() => {
+          setQuery({ genres, providers });
+          setPage(1);
+        }}
+        w='100%'
+        colorScheme='blue'
+      >
+        Go!
+      </Button>
       {data!.movies.length > 0 ? (
         <>
           <Pagination
