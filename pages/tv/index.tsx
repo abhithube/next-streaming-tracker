@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
 import {
   Button,
@@ -10,14 +10,14 @@ import {
 } from '@chakra-ui/react';
 
 import TVShowCard from '../../components/TVShowCard';
+import GenresFilter from '../../components/GenresFilter';
 import ProvidersFilter from '../../components/ProvidersFilter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
+import useTVShows from '../../lib/hooks/useTVShows';
 import { Genre, Provider, TVShowSummary } from '../../lib/types';
 import { fetchGenres, fetchTVShows } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
-import useTVShows from '../../lib/hooks/useTVShows';
-import GenresFilter from '../../components/GenresFilter';
 
 type TVShowsPageProps = {
   initTVShows: TVShowSummary[];
@@ -49,6 +49,8 @@ const TVShowsPage = ({
     query,
     initialData: { tvShows: initTVShows, pageCount: initPageCount },
   });
+
+  useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [page]);
 
   if (error)
     return (

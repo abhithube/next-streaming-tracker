@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
+import GenresFilter from '../../components/GenresFilter';
 import ProvidersFilter from '../../components/ProvidersFilter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
@@ -17,7 +18,6 @@ import useMovies from '../../lib/hooks/useMovies';
 import { Genre, MovieSummary, Provider } from '../../lib/types';
 import { fetchGenres, fetchMovies } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
-import GenresFilter from '../../components/GenresFilter';
 
 type MoviesPageProps = {
   initMovies: MovieSummary[];
