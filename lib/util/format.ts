@@ -62,22 +62,9 @@ export const formatReleaseDate = (data: string) => {
   });
 };
 
-export const formatProviders = (data: Provider[]) => {
+export const formatQuery = (data: any[]) => {
   return data
-    .sort((a, b) => {
-      if (a.id > b.id) return 1;
-      else return -1;
-    })
-    .map(({ name }) => name)
-    .join(', ');
-};
-
-export const formatGenres = (data: Genre[]) => {
-  return data
-    .sort((a, b) => {
-      if (a.name > b.name) return 1;
-      else return -1;
-    })
+    .sort()
     .map(({ name }) => name)
     .join(', ');
 };

@@ -49,7 +49,7 @@ export const fetchMovies = async ({
 export const fetchTVShows = async ({
   page,
   genres,
-  providers = SUPPORTED_PROVIDERS,
+  providers,
 }: DiscoverRequest) => {
   let params: any = {
     page,

@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from 'react-query';
 
 import { Genre, Provider, TVShowSummary } from '../types';
 import { fetchTVShows } from '../util/fetch';
-import { formatGenres, formatProviders } from '../util/format';
+import { formatQuery } from '../util/format';
 import { prefetchTVShows } from '../util/prefetch';
 
 type useMoviesDef = {
@@ -25,8 +25,8 @@ const useTVShows = ({ page, query, initialData }: useMoviesDef) => {
       '/tv',
       {
         page,
-        genres: formatGenres(query.genres),
-        providers: formatProviders(query.providers),
+        genres: formatQuery(query.genres),
+        providers: formatQuery(query.providers),
       },
     ],
     async () =>

@@ -10,8 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import MovieCard from '../../components/MovieCard';
-import GenresFilter from '../../components/GenresFilter';
-import ProvidersFilter from '../../components/ProvidersFilter';
+import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
 import useMovies from '../../lib/hooks/useMovies';
@@ -70,15 +69,17 @@ const MoviesPage = ({
         Popular Movies
       </Heading>
       <Flex direction='row' mb='4'>
-        <GenresFilter
-          genreList={genreList}
-          genres={genres}
-          setGenres={setGenres}
+        <Filter
+          type='Genres'
+          list={genreList}
+          selected={genres}
+          setSelected={setGenres}
         />
-        <ProvidersFilter
-          providerList={providerList}
-          providers={providers}
-          setProviders={setProviders}
+        <Filter
+          type='Providers'
+          list={providerList}
+          selected={providers}
+          setSelected={setProviders}
         />
       </Flex>
       <Button
