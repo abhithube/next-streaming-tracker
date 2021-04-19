@@ -16,8 +16,7 @@ const DetailsHeader = ({ contentDetails }: DetailsHeaderProps) => {
         })
       `}
       bgSize='auto 100%'
-      bgRepeat='no-repeat'
-      minH='100%'
+      h='calc(100vh - 64px)'
       py='16'
       color='white'
     >

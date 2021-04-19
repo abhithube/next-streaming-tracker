@@ -22,7 +22,7 @@ const Navbar = () => {
       pos='fixed'
       zIndex='1'
       h='16'
-      bg='blue.900'
+      bgColor='gray.800'
       color='white'
     >
       <HStack w='80%' spacing='8'>
@@ -33,24 +33,29 @@ const Navbar = () => {
                 <Icon as={FcFilmReel} fontSize='3xl' />
                 <Heading
                   fontSize='2xl'
-                  bgGradient='linear(to-r, green.300, blue.300)'
+                  bgGradient='linear(to-r, red.500, purple.400)'
                   bgClip='text'
                 >
-                  TrackIt!
+                  Trackit!
                 </Heading>
               </HStack>
             </LinkOverlay>
           </NextLink>
         </LinkBox>
         <HStack spacing='4' w='100%'>
-          <Box _hover={{ color: 'blue.300' }}>
-            <Link as={NextLink} href='/movie' _hover={{ color: 'blue.300' }}>
+          <Box _hover={{ color: 'red.500' }}>
+            <Link as={NextLink} href='/movie'>
               Movies
             </Link>
           </Box>
-          <Box _hover={{ color: 'blue.300' }}>
+          <Box _hover={{ color: 'red.500' }}>
             <Link as={NextLink} href='/tv'>
               TV Shows
+            </Link>
+          </Box>
+          <Box _hover={{ color: 'red.500' }}>
+            <Link as={NextLink} href='/about'>
+              About
             </Link>
           </Box>
         </HStack>

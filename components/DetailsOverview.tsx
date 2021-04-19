@@ -6,6 +6,7 @@ import {
   Flex,
   Heading,
   HStack,
+  Icon,
   Image,
   SimpleGrid,
   Text,
@@ -14,11 +15,11 @@ import {
 import { ContentDetails } from '../lib/types';
 import {
   formatAgeRating,
-  formatReleaseDate,
   formatReleaseYear,
   formatRuntime,
 } from '../lib/util/format';
 import { IMAGE_URL } from '../lib/constants';
+import { AiFillStar } from 'react-icons/ai';
 
 type DetailsOverviewProps = { contentDetails: ContentDetails };
 
@@ -40,7 +41,15 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
           {contentDetails.ageRating}
         </Badge>
         <Divider orientation='vertical' />
-        <Text>{formatReleaseDate(contentDetails.releaseDate)}</Text>
+        <HStack spacing='0.5'>
+          <Icon as={AiFillStar} fontSize='xl' color='yellow.400' mr='0.5' />
+          <Text>
+            {contentDetails.voteAverage.toFixed(1)}{' '}
+            <Text as='span' color='gray.400'>
+              ({contentDetails.voteCount})
+            </Text>
+          </Text>
+        </HStack>
         <Divider orientation='vertical' />
         <Text>{contentDetails.genres}</Text>
         {contentDetails.runtime && (
@@ -54,12 +63,12 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
         <HStack
           spacing='4'
           mb='8'
-          px='8'
-          py='4'
+          px='4'
+          py='2'
           bgColor='gray.900'
           border='1px'
           borderColor='gray.600'
-          rounded='2xl'
+          rounded='md'
         >
           <Text fontWeight='bold' fontSize='lg'>
             NOW STREAMING ON

@@ -61,7 +61,7 @@ const TVShowsPage = ({
     );
 
   return (
-    <Container maxW='80%' mt='8' mb='16'>
+    <Container maxW='80%' mt='8' pb='16'>
       <Meta
         title='TV Shows'
         description='Popular TV shows currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'
