@@ -70,6 +70,21 @@ export const fetchTVShows = async ({
   return { tvShows: parseTVShows(data.results), pageCount };
 };
 
+export const search = async (query: string) => {
+  const { data } = await axios.get('/search/multi', {
+    params: { query },
+  });
+
+  let movies: any[] = [],
+    tvShows: any[] = [];
+  data.results.forEach((result: any) => {
+    if (result.media_type === 'movie') movies.push(result);
+    else if (result.media_type === 'tv') tvShows.push(result);
+  });
+
+  return { movies: parseMovies(movies), tvShows: parseTVShows(tvShows) };
+};
+
 export const fetchMovie = async (id: string) => {
   const { data } = await axios.get(`/movie/${id}`, {
     params: {

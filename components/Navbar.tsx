@@ -12,6 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { FcFilmReel } from 'react-icons/fc';
 
+import Search from './Search';
+
 const Navbar = () => {
   return (
     <Center
@@ -40,9 +42,9 @@ const Navbar = () => {
             </LinkOverlay>
           </NextLink>
         </LinkBox>
-        <HStack spacing='4'>
+        <HStack spacing='4' w='100%'>
           <Box _hover={{ color: 'blue.300' }}>
-            <Link as={NextLink} href='/movies'>
+            <Link as={NextLink} href='/movies' _hover={{ color: 'blue.300' }}>
               Movies
             </Link>
           </Box>
@@ -52,6 +54,7 @@ const Navbar = () => {
             </Link>
           </Box>
         </HStack>
+        <Search />
       </HStack>
     </Center>
   );

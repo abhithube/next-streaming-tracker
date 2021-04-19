@@ -15,14 +15,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   });
   return (
     <ChakraProvider>
-      <CSSReset />
-      <Navbar />
-      <Box pt='16'>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <CSSReset />
+        <Navbar />
+        <Box pt='16'>
           <Component {...pageProps} />
           <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
-        </QueryClientProvider>
-      </Box>
+        </Box>
+      </QueryClientProvider>
     </ChakraProvider>
   );
 };
