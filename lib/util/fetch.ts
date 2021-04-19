@@ -1,20 +1,14 @@
 import axios from 'axios';
 
-import { Genre, MovieDetails, Provider, TVShowDetails } from '../types';
+import { Content, ContentDetails, Genre, Provider } from '../types';
 import {
-  parseMovieCertification,
-  parseTVShowCertification,
-  parseActors,
-  parseMovieCreators,
-  parseTVShowCreators,
+  parseAgeRating,
+  parseAll,
+  parseCreators,
   parseGenres,
-  parseMovies,
   parseProviders,
-  parseStudio,
-  parseTVShows,
-  parseReviews,
+  parseSearch,
 } from './parse';
-import { SUPPORTED_PROVIDERS } from '../constants';
 
 type DiscoverRequest = {
   page: number;
@@ -22,52 +16,55 @@ type DiscoverRequest = {
   providers?: Provider[];
 };
 
-export const fetchMovies = async ({
-  page,
-  genres,
-  providers,
-}: DiscoverRequest) => {
-  let params: any = {
-    page,
-    with_watch_providers: SUPPORTED_PROVIDERS,
-    watch_region: 'US',
-    with_watch_monetization_types: 'flatrate',
-  };
+export const fetchAll = async (
+  type: Content,
+  { page, genres, providers }: DiscoverRequest
+) => {
+  let params: any = { page };
 
   if (genres) params.with_genres = genres.map(({ id }) => id).join(',');
   if (providers) {
     params.with_watch_providers = providers.map(({ id }) => id).join('|');
+    params.watch_region = 'US';
+    params.with_watch_monetization_types = 'flatrate';
   }
 
-  const { data } = await axios.get('/discover/movie', { params });
+  const { data } = await axios.get(`/discover/${type}`, { params });
 
   const pageCount: number = data.total_pages;
 
-  return { movies: parseMovies(data.results), pageCount };
+  return { results: parseAll(data.results), pageCount };
 };
 
-export const fetchTVShows = async ({
-  page,
-  genres,
-  providers,
-}: DiscoverRequest) => {
-  let params: any = {
-    page,
-    with_watch_providers: SUPPORTED_PROVIDERS,
-    watch_region: 'US',
-    with_watch_monetization_types: 'flatrate',
+export const fetchOne = async (type: Content, id: string) => {
+  const { data } = await axios.get(`/${type}/${id}`, {
+    params: {
+      append_to_response:
+        'release_dates,content_ratings,credits,reviews,watch/providers',
+    },
+  });
+
+  const contentDetails: ContentDetails = {
+    id: data.id,
+    title: data.title || data.name,
+    posterPath: data.poster_path,
+    voteAverage: data.vote_average,
+    voteCount: data.vote_count,
+    backdropPath: data.backdrop_path,
+    overview: data.overview,
+    tagline: data.tagline,
+    ageRating: parseAgeRating(
+      type,
+      data.release_dates?.results || data.content_ratings?.results
+    ),
+    runtime: data.runtime || data.episode_run_time[0],
+    genres: parseGenres(data.genres),
+    releaseDate: data.release_date || data.first_air_date,
+    creators: parseCreators(type, data.created_by || data.credits.crew),
+    providers: parseProviders(data['watch/providers'].results),
   };
 
-  if (genres) params.with_genres = genres.map(({ id }) => id).join(',');
-  if (providers) {
-    params.with_watch_providers = providers.map(({ id }) => id).join('|');
-  }
-
-  const { data } = await axios.get('/discover/tv', { params });
-
-  const pageCount: number = data.total_pages;
-
-  return { tvShows: parseTVShows(data.results), pageCount };
+  return contentDetails;
 };
 
 export const search = async (query: string) => {
@@ -75,92 +72,14 @@ export const search = async (query: string) => {
     params: { query },
   });
 
-  let movies: any[] = [],
-    tvShows: any[] = [];
-  data.results.forEach((result: any) => {
-    if (result.media_type === 'movie') movies.push(result);
-    else if (result.media_type === 'tv') tvShows.push(result);
-  });
+  const results: any[] = [];
+  data.results
+    .filter((result: any) => result.poster_path !== null)
+    .forEach((result: any) => {
+      if (['movie', 'tv'].includes(result.media_type)) results.push(result);
+    });
 
-  return { movies: parseMovies(movies), tvShows: parseTVShows(tvShows) };
-};
-
-export const fetchMovie = async (id: string) => {
-  const { data } = await axios.get(`/movie/${id}`, {
-    params: {
-      append_to_response: 'release_dates,credits,reviews,watch/providers',
-    },
-  });
-
-  const ageRating = parseMovieCertification(data.release_dates.results);
-  const genres = parseGenres(data.genres);
-  const studio = parseStudio(data.production_companies);
-  const creators = parseMovieCreators(data.credits.crew);
-  const actors = parseActors(data.credits.cast);
-  const reviews = parseReviews(data.reviews.results);
-  const providers = parseProviders(data['watch/providers'].results);
-
-  const movieDetails: MovieDetails = {
-    id: data.id,
-    title: data.title,
-    posterPath: data.poster_path,
-    voteAverage: data.vote_average,
-    voteCount: data.vote_count,
-    backdropPath: data.backdrop_path,
-    overview: data.overview,
-    tagline: data.tagline,
-    ageRating,
-    runtime: data.runtime,
-    genres,
-    status: data.status,
-    releaseDate: data.release_date,
-    budget: data.budget,
-    revenue: data.revenue,
-    studio,
-    creators,
-    actors,
-    reviews,
-    providers,
-  };
-
-  return movieDetails;
-};
-
-export const fetchTVShow = async (id: string) => {
-  const { data } = await axios.get(`/tv/${id}`, {
-    params: {
-      append_to_response: 'content_ratings,credits,reviews,watch/providers',
-    },
-  });
-
-  const ageRating = parseTVShowCertification(data.content_ratings.results);
-  const genres = parseGenres(data.genres);
-  const creators = parseTVShowCreators(data.created_by);
-  const actors = parseActors(data.credits.cast);
-  const reviews = parseReviews(data.reviews.results);
-  const providers = parseProviders(data['watch/providers'].results);
-
-  const tvShowDetails: TVShowDetails = {
-    id: data.id,
-    name: data.name,
-    posterPath: data.poster_path,
-    voteAverage: data.vote_average,
-    voteCount: data.vote_count,
-    backdropPath: data.backdrop_path,
-    overview: data.overview,
-    tagline: data.tagline,
-    ageRating,
-    runtime: data.episode_run_time,
-    genres,
-    status: data.status,
-    firstAirDate: data.first_air_date,
-    creators,
-    actors,
-    reviews,
-    providers,
-  };
-
-  return tvShowDetails;
+  return parseSearch(results);
 };
 
 export const fetchGenres = async (type: 'movie' | 'tv'): Promise<Genre[]> => {

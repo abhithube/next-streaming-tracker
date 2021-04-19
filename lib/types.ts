@@ -1,4 +1,4 @@
-export type MovieSummary = {
+export type ContentSummary = {
   id: number;
   title: string;
   posterPath: string;
@@ -6,40 +6,9 @@ export type MovieSummary = {
   voteAverage: number;
 };
 
-export type TVShowSummary = {
-  id: number;
-  name: string;
-  posterPath: string;
-  firstAirDate: string;
-  voteAverage: number;
-};
-
-export type MovieDetails = {
+export type ContentDetails = {
   id: number;
   title: string;
-  posterPath: string;
-  voteAverage: number;
-  voteCount: number;
-  backdropPath: string;
-  overview: string;
-  tagline: string;
-  ageRating: string;
-  runtime: number | null;
-  genres: string;
-  status: string;
-  releaseDate: string;
-  budget: number;
-  revenue: number;
-  studio: string;
-  creators: Creator[];
-  actors: Actor[];
-  reviews: Review[];
-  providers: Provider[];
-};
-
-export type TVShowDetails = {
-  id: number;
-  name: string;
   posterPath: string | null;
   voteAverage: number;
   voteCount: number;
@@ -47,36 +16,24 @@ export type TVShowDetails = {
   overview: string;
   tagline: string;
   ageRating: string;
-  runtime: number;
+  runtime: number | null;
   genres: string;
-  status: string;
-  firstAirDate: string;
-  creators: string[];
-  actors: Actor[];
-  reviews: Review[];
+  releaseDate: string;
+  creators: Creator[];
   providers: Provider[];
+};
+
+export type SearchResult = {
+  id: number;
+  type: Content;
+  title: string;
+  posterPath: string;
 };
 
 export type Creator = {
   id: number;
   name: string;
   job: 'Creator' | 'Director' | 'Screenplay' | 'Story' | 'Writer';
-};
-
-export type Actor = {
-  id: number;
-  name: string;
-  character: string;
-  profilePath: string;
-};
-
-export type Review = {
-  id: number;
-  content: string;
-  createdAt: string;
-  author: string;
-  avatarPath: string | null;
-  rating: number | null;
 };
 
 export type Provider = {
@@ -89,3 +46,5 @@ export type Genre = {
   id: number;
   name: string;
 };
+
+export type Content = 'movie' | 'tv';

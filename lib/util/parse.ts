@@ -1,117 +1,81 @@
 import {
-  Actor,
+  Content,
+  ContentSummary,
   Creator,
-  MovieSummary,
   Provider,
-  Review,
-  TVShowSummary,
+  SearchResult,
 } from '../types';
 import { SUPPORTED_PROVIDERS } from '../constants';
 
-export const parseMovies = (data: any[]): MovieSummary[] => {
-  return data.map((movie) => {
+export const parseAll = (results: any[]): ContentSummary[] => {
+  return results.map((result) => {
     return {
-      id: movie.id,
-      title: movie.title,
-      posterPath: movie.poster_path,
-      releaseDate: movie.release_date,
-      voteAverage: movie.vote_average,
+      id: result.id,
+      title: result.title || result.name,
+      posterPath: result.poster_path,
+      releaseDate: result.release_date || result.first_air_date,
+      voteAverage: result.vote_average,
     };
   });
 };
 
-export const parseTVShows = (data: any[]): TVShowSummary[] => {
-  return data.map((show) => {
+export const parseSearch = (results: any[]): SearchResult[] => {
+  return results.map((result) => {
     return {
-      id: show.id,
-      name: show.name,
-      posterPath: show.poster_path,
-      firstAirDate: show.first_air_date,
-      voteAverage: show.vote_average,
+      id: result.id,
+      type: result.media_type,
+      title: result.title || result.name,
+      posterPath: result.poster_path,
     };
   });
 };
 
-export const parseMovieCertification = (data: any[]): string => {
-  const usReleases = data.find(({ iso_3166_1 }) => iso_3166_1 === 'US')
-    .release_dates;
+export const parseAgeRating = (type: Content, data: any[]): string => {
+  const usReleases = data.find(({ iso_3166_1 }) => iso_3166_1 === 'US');
+  if (!usReleases) return 'NR';
 
-  return usReleases[usReleases.length - 1].certification;
-};
-
-export const parseTVShowCertification = (data: any[]): string => {
-  return data.find(({ iso_3166_1 }) => iso_3166_1 === 'US').rating;
+  if (type === 'movie') {
+    const releaseDates = usReleases.release_dates;
+    return releaseDates[releaseDates.length - 1].certification;
+  } else return usReleases.rating;
 };
 
 export const parseGenres = (data: any[]) => {
   return data.map(({ name }) => name).join(', ');
 };
 
-export const parseStudio = (data: any[]): string => {
-  if (data.length > 0) return data[0].name;
-  else return '';
-};
-
-export const parseMovieCreators = (data: any[]): Creator[] => {
-  let creators: Creator[] = data.reduce((filtered: Creator[], creator) => {
-    if (['Director', 'Screenplay', 'Story', 'Writer'].includes(creator.job)) {
-      const elem = filtered.find(({ id }) => id === creator.id);
-      if (elem) elem.job += `, ${creator.job}`;
-      else {
-        const { id, name, job } = creator;
-        filtered.push({ id, name, job });
+export const parseCreators = (type: Content, data: any[]): Creator[] => {
+  if (type === 'movie') {
+    let creators: Creator[] = data.reduce((filtered: Creator[], creator) => {
+      if (['Director', 'Screenplay', 'Story', 'Writer'].includes(creator.job)) {
+        const elem = filtered.find(({ id }) => id === creator.id);
+        if (elem) elem.job += `, ${creator.job}`;
+        else {
+          const { id, name, job } = creator;
+          filtered.push({ id, name, job });
+        }
       }
-    }
 
-    return filtered;
-  }, []);
+      return filtered;
+    }, []);
 
-  if (creators.length > 6) creators = creators.slice(0, 6);
+    if (creators.length > 6) creators = creators.slice(0, 6);
 
-  return creators;
-};
-
-export const parseTVShowCreators = (data: any[]): string[] => {
-  return data.map((creator) => creator.name);
-};
-
-export const parseActors = (data: any[]) => {
-  const cast: Actor[] = data.reduce((filtered: Actor[], actor) => {
-    if (actor.profile_path) {
-      const { id, name, character } = actor;
-      filtered.push({
-        id,
-        name,
-        character,
-        profilePath: actor.profile_path,
-      });
-    }
-
-    return filtered;
-  }, []);
-
-  return cast.slice(0, 20);
-};
-
-export const parseReviews = (data: any[]): Review[] => {
-  data = data.slice(0, 3);
-
-  return data.map((review) => {
-    return {
-      id: review.id,
-      content: review.content,
-      createdAt: review.created_at,
-      author: review.author_details.username,
-      avatarPath: review.author_details.avatar_path,
-      rating: review.author_details.rating,
-    };
-  });
+    return creators.sort((a, b) => {
+      if (a.job > b.job) return 1;
+      else return -1;
+    });
+  } else {
+    return data.map(({ id, name }) => {
+      return { id, name, job: 'Creator' };
+    });
+  }
 };
 
 const providers = SUPPORTED_PROVIDERS.map(({ id }) => id);
 
 export const parseProviders = (data: any): Provider[] => {
-  if (!data.US.flatrate) return [];
+  if (!data.US?.flatrate) return [];
 
   return data.US.flatrate.reduce((filtered: Provider[], provider: any) => {
     if (providers.includes(provider.provider_id)) {

@@ -6,21 +6,21 @@ import Meta from '../../components/Meta';
 import { ContentDetails } from '../../lib/types';
 import { fetchAll, fetchOne } from '../../lib/util/fetch';
 
-type TVShowPageProps = { tvShowDetails: ContentDetails };
+type MoviePageProps = { movieDetails: ContentDetails };
 
-const TVShowPage = ({ tvShowDetails }: TVShowPageProps) => {
+const MoviePage = ({ movieDetails }: MoviePageProps) => {
   return (
     <Box h='100%'>
-      <Meta title={tvShowDetails.title} description={tvShowDetails.overview} />
-      <DetailsHeader contentDetails={tvShowDetails} />
+      <Meta title={movieDetails.title} description={movieDetails.overview} />
+      <DetailsHeader contentDetails={movieDetails} />
     </Box>
   );
 };
 
-export default TVShowPage;
+export default MoviePage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { results } = await fetchAll('tv', { page: 1 });
+  const { results } = await fetchAll('movie', { page: 1 });
 
   const paths = results.map(({ id }) => {
     return { params: { id: id.toString() } };
@@ -31,11 +31,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const tvShowDetails = await fetchOne('tv', params!.id as string);
+    const movieDetails = await fetchOne('movie', params!.id as string);
 
-    if (!tvShowDetails) return { notFound: true };
+    if (!movieDetails) return { notFound: true };
 
-    return { props: { tvShowDetails } };
+    return { props: { movieDetails } };
   } catch (err) {
     return { notFound: true };
   }

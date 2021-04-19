@@ -1,5 +1,3 @@
-import { Genre, Provider } from '../types';
-
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -18,33 +16,23 @@ export const formatRuntime = (data: number) => {
   return hour > 0 ? `${hour}hr ${min}min` : `${min}min`;
 };
 
-export const formatMovieRating = (data: string) => {
+export const formatAgeRating = (data: string) => {
   switch (data) {
     case 'PG-13':
+    case 'TV-14':
       return 'yellow';
     case 'R':
+    case 'TV-MA':
       return 'red';
     case 'PG':
     case 'G':
-      return 'green';
-    case 'NC-17':
-      return 'purple';
-    default:
-      return 'gray';
-  }
-};
-
-export const formatTVRating = (data: string) => {
-  switch (data) {
-    case 'TV-MA':
-      return 'red';
-    case 'TV-14':
-      return 'yellow';
     case 'TV-PG':
     case 'TV-G':
     case 'TV-Y7':
     case 'TV-Y':
       return 'green';
+    case 'NC-17':
+      return 'purple';
     default:
       return 'gray';
   }

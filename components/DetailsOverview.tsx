@@ -11,49 +11,50 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { MovieDetails } from '../lib/types';
+import { ContentDetails } from '../lib/types';
 import {
-  formatMovieRating,
+  formatAgeRating,
   formatReleaseDate,
   formatReleaseYear,
   formatRuntime,
 } from '../lib/util/format';
 import { IMAGE_URL } from '../lib/constants';
 
-type MovieOverviewProps = { movieDetails: MovieDetails };
+type DetailsOverviewProps = { contentDetails: ContentDetails };
 
-const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
+const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
   return (
-    <Flex direction='column' align='flex-start' flexBasis='80%'>
+    <Flex direction='column' align='flex-start' flexBasis='66%'>
       <Heading as='h1' mb='4'>
-        {`${movieDetails.title} `}
+        {`${contentDetails.title} `}
         <Text as='span' fontWeight='normal' color='gray.400'>
-          ({formatReleaseYear(movieDetails.releaseDate)})
+          ({formatReleaseYear(contentDetails.releaseDate)})
         </Text>
       </Heading>
       <HStack h='6' mb='6'>
         <Badge
           variant='outline'
           fontSize='sm'
-          colorScheme={formatMovieRating(movieDetails.ageRating)}
+          colorScheme={formatAgeRating(contentDetails.ageRating)}
         >
-          {movieDetails.ageRating}
+          {contentDetails.ageRating}
         </Badge>
-        <Text>{formatReleaseDate(movieDetails.releaseDate)}</Text>
         <Divider orientation='vertical' />
-        <Text>{movieDetails.genres}</Text>
-        {movieDetails.runtime && (
+        <Text>{formatReleaseDate(contentDetails.releaseDate)}</Text>
+        <Divider orientation='vertical' />
+        <Text>{contentDetails.genres}</Text>
+        {contentDetails.runtime && (
           <>
             <Divider orientation='vertical' />
-            <Text>{formatRuntime(movieDetails.runtime)}</Text>
+            <Text>{formatRuntime(contentDetails.runtime)}</Text>
           </>
         )}
       </HStack>
-      {movieDetails.providers.length > 0 && (
+      {contentDetails.providers.length > 0 && (
         <HStack
           spacing='4'
-          mb='6'
-          px='6'
+          mb='8'
+          px='8'
           py='4'
           bgColor='gray.900'
           border='1px'
@@ -63,7 +64,7 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
           <Text fontWeight='bold' fontSize='lg'>
             NOW STREAMING ON
           </Text>
-          {movieDetails.providers.map((provider) => (
+          {contentDetails.providers.map((provider) => (
             <Fragment key={provider.id}>
               <Image
                 src={IMAGE_URL + provider.logoPath}
@@ -79,11 +80,11 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
       <Heading fontSize='xl' mb='2'>
         Overview
       </Heading>
-      <Text mb='6' color='gray.400'>
-        {movieDetails.overview}
+      <Text mb='12' color='gray.400'>
+        {contentDetails.overview}
       </Text>
       <SimpleGrid columns={[2, 2, 3]} spacing='2' mb='4' w='100%'>
-        {movieDetails.creators.map((person) => (
+        {contentDetails.creators.map((person) => (
           <Box key={person.id} pr='8'>
             <Text fontWeight='bold'>{person.name}</Text>
             <Text color='gray.400'>{person.job}</Text>
@@ -94,4 +95,4 @@ const MovieOverview = ({ movieDetails }: MovieOverviewProps) => {
   );
 };
 
-export default MovieOverview;
+export default DetailsOverview;

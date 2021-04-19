@@ -9,17 +9,18 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import TVShowCard from '../../components/TVShowCard';
+import TVShowCard from '../../components/SummaryCard';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
-import useTVShows from '../../lib/hooks/useTVShows';
-import { Genre, Provider, TVShowSummary } from '../../lib/types';
-import { fetchGenres, fetchTVShows } from '../../lib/util/fetch';
+import useFetch from '../../lib/hooks/useFetch';
+import { Genre, Provider, ContentSummary } from '../../lib/types';
+import { fetchAll, fetchGenres } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
+import SummaryCard from '../../components/SummaryCard';
 
 type TVShowsPageProps = {
-  initTVShows: TVShowSummary[];
+  initResults: ContentSummary[];
   initPageCount: number;
   genreList: Genre[];
   providerList: Provider[];
@@ -31,7 +32,7 @@ type QueryDef = {
 };
 
 const TVShowsPage = ({
-  initTVShows,
+  initResults,
   initPageCount,
   genreList,
   providerList,
@@ -43,10 +44,10 @@ const TVShowsPage = ({
 
   const [query, setQuery] = useState<QueryDef>({ genres, providers });
 
-  const { data, error } = useTVShows({
+  const { data, error } = useFetch('tv', {
     page,
     query,
-    initialData: { tvShows: initTVShows, pageCount: initPageCount },
+    initialData: { contentList: initResults, pageCount: initPageCount },
   });
 
   useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [page]);
@@ -92,7 +93,7 @@ const TVShowsPage = ({
       >
         Go!
       </Button>
-      {data!.tvShows.length > 0 ? (
+      {data!.results.length > 0 ? (
         <>
           <Pagination
             page={page}
@@ -100,9 +101,9 @@ const TVShowsPage = ({
             setPage={setPage}
           />
           <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
-            {data!.tvShows.map((tvShow) => (
+            {data!.results.map((tvShow) => (
               <Fragment key={tvShow.id}>
-                <TVShowCard tvShowSummary={tvShow} />
+                <SummaryCard type='tv' contentSummary={tvShow} />
               </Fragment>
             ))}
           </SimpleGrid>
@@ -122,14 +123,14 @@ const TVShowsPage = ({
 export default TVShowsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const [{ tvShows, pageCount }, genreList] = await Promise.all([
-    fetchTVShows({ page: 1 }),
+  const [{ results, pageCount }, genreList] = await Promise.all([
+    fetchAll('tv', { page: 1 }),
     fetchGenres('tv'),
   ]);
 
   return {
     props: {
-      initTVShows: tvShows,
+      initResults: results,
       initPageCount: pageCount,
       genreList,
       providerList: SUPPORTED_PROVIDERS,

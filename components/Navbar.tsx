@@ -36,7 +36,7 @@ const Navbar = () => {
                   bgGradient='linear(to-r, green.300, blue.300)'
                   bgClip='text'
                 >
-                  StreamDB
+                  TrackIt!
                 </Heading>
               </HStack>
             </LinkOverlay>
@@ -44,13 +44,13 @@ const Navbar = () => {
         </LinkBox>
         <HStack spacing='4' w='100%'>
           <Box _hover={{ color: 'blue.300' }}>
-            <Link as={NextLink} href='/movies' _hover={{ color: 'blue.300' }}>
+            <Link as={NextLink} href='/movie' _hover={{ color: 'blue.300' }}>
               Movies
             </Link>
           </Box>
           <Box _hover={{ color: 'blue.300' }}>
             <Link as={NextLink} href='/tv'>
-              TV
+              TV Shows
             </Link>
           </Box>
         </HStack>

@@ -14,10 +14,11 @@ import {
 import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
 import { IMAGE_URL } from '../lib/constants';
+import { ContentSummary, SearchResult } from '../lib/types';
 
 const Search = () => {
   const [search, setSearch] = useState('');
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const [shouldShow, setShouldShow] = useState(false);
 
   const debouncedSearch = useDebounce(search, 500);
@@ -26,9 +27,7 @@ const Search = () => {
 
   useEffect(() => {
     if (data) {
-      const results: any[] = data.movies;
-      results.push(data.tvShows);
-      setResults(results.slice(0, 5));
+      setResults(data.slice(0, 5));
       setShouldShow(true);
     }
   }, [data]);
@@ -46,7 +45,7 @@ const Search = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setShouldShow(true)}
-        onBlur={() => setTimeout(() => setShouldShow(false), 250)}
+        onBlur={() => setTimeout(() => setShouldShow(false), 100)}
         placeholder='Search movies or TV shows...'
       />
       {shouldShow && (
@@ -64,14 +63,14 @@ const Search = () => {
               <HStack px='2' py='1'>
                 <Image
                   src={IMAGE_URL + result.posterPath}
-                  alt={result.name}
+                  alt={result.title}
                   width='30'
                   height='45'
                 />
-                <Link href={`/movies/${result.id}`} passHref>
+                <Link href={`/${result.type}/${result.id}`} passHref>
                   <LinkOverlay onClick={() => setSearch('')}>
                     <Text as='span' noOfLines={1}>
-                      {result.title ? result.title : result.name}
+                      {result.title}
                     </Text>
                   </LinkOverlay>
                 </Link>

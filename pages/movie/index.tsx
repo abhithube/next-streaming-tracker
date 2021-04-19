@@ -9,17 +9,17 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import MovieCard from '../../components/MovieCard';
+import SummaryCard from '../../components/SummaryCard';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
-import useMovies from '../../lib/hooks/useMovies';
-import { Genre, MovieSummary, Provider } from '../../lib/types';
-import { fetchGenres, fetchMovies } from '../../lib/util/fetch';
+import useFetch from '../../lib/hooks/useFetch';
+import { Genre, ContentSummary, Provider } from '../../lib/types';
+import { fetchGenres, fetchAll } from '../../lib/util/fetch';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
 
 type MoviesPageProps = {
-  initMovies: MovieSummary[];
+  initMovies: ContentSummary[];
   initPageCount: number;
   genreList: Genre[];
   providerList: Provider[];
@@ -43,10 +43,10 @@ const MoviesPage = ({
 
   const [query, setQuery] = useState<QueryDef>({ genres, providers });
 
-  const { data, error } = useMovies({
+  const { data, error } = useFetch('movie', {
     page,
     query,
-    initialData: { movies: initMovies, pageCount: initPageCount },
+    initialData: { contentList: initMovies, pageCount: initPageCount },
   });
 
   useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [page]);
@@ -92,7 +92,7 @@ const MoviesPage = ({
       >
         Go!
       </Button>
-      {data!.movies.length > 0 ? (
+      {data!.results.length > 0 ? (
         <>
           <Pagination
             page={page}
@@ -100,9 +100,9 @@ const MoviesPage = ({
             setPage={setPage}
           />
           <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
-            {data!.movies.map((movie) => (
+            {data!.results.map((movie) => (
               <Fragment key={movie.id}>
-                <MovieCard movieSummary={movie} />
+                <SummaryCard type='movie' contentSummary={movie} />
               </Fragment>
             ))}
           </SimpleGrid>
@@ -122,14 +122,14 @@ const MoviesPage = ({
 export default MoviesPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const [{ movies, pageCount }, genreList] = await Promise.all([
-    fetchMovies({ page: 1 }),
+  const [{ results, pageCount }, genreList] = await Promise.all([
+    fetchAll('movie', { page: 1 }),
     fetchGenres('movie'),
   ]);
 
   return {
     props: {
-      initMovies: movies,
+      initMovies: results,
       initPageCount: pageCount,
       genreList,
       providerList: SUPPORTED_PROVIDERS,

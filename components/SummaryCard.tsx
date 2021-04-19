@@ -11,40 +11,40 @@ import {
 import { AiFillStar } from 'react-icons/ai';
 
 import WrapperImage from './WrapperImage';
-import { MovieSummary } from '../lib/types';
+import { Content, ContentSummary } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
 import { formatReleaseDate } from '../lib/util/format';
 
-type MovieCardProps = { movieSummary: MovieSummary };
+type SummaryCardProps = { type: Content; contentSummary: ContentSummary };
 
-const MovieCard = ({ movieSummary }: MovieCardProps) => {
+const SummaryCard = ({ type, contentSummary }: SummaryCardProps) => {
   return (
     <LinkBox roundedBottom='lg' shadow='md'>
       <WrapperImage
-        src={IMAGE_URL + movieSummary.posterPath}
-        alt={movieSummary.title}
-        width={300}
-        height={450}
+        src={IMAGE_URL + contentSummary.posterPath}
+        alt={contentSummary.title}
+        width={360}
+        height={540}
         roundedTop='lg'
       />
       <VStack align='stretch' p='4' pt='2'>
         <HStack>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' />
-          <Text>{movieSummary.voteAverage.toFixed(1)}</Text>
+          <Text>{contentSummary.voteAverage.toFixed(1)}</Text>
         </HStack>
-        <Link href={`/movies/${movieSummary.id}`} passHref>
+        <Link href={`/${type}/${contentSummary.id}`} passHref>
           <LinkOverlay>
             <Heading fontSize='xl' noOfLines={2}>
-              {movieSummary.title}
+              {contentSummary.title}
             </Heading>
           </LinkOverlay>
         </Link>
         <Text fontSize='sm' color='gray.600'>
-          {formatReleaseDate(movieSummary.releaseDate)}
+          {formatReleaseDate(contentSummary.releaseDate)}
         </Text>
       </VStack>
     </LinkBox>
   );
 };
 
-export default MovieCard;
+export default SummaryCard;

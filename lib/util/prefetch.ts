@@ -1,7 +1,7 @@
 import { QueryClient } from 'react-query';
 
-import { Genre, Provider } from '../types';
-import { fetchMovies, fetchTVShows } from './fetch';
+import { Content, Genre, Provider } from '../types';
+import { fetchAll } from './fetch';
 import { formatQuery } from './format';
 
 type PrefetchConfig = {
@@ -10,7 +10,8 @@ type PrefetchConfig = {
   pageCount: number;
 };
 
-export const prefetchMovies = (
+export const prefetch = (
+  type: Content,
   genres: Genre[],
   providers: Provider[],
   { queryClient, page, pageCount }: PrefetchConfig
@@ -19,35 +20,14 @@ export const prefetchMovies = (
 
   queryClient.prefetchQuery(
     [
-      '/movies',
+      `/${type}`,
       {
         page: page + 1,
         genres: formatQuery(genres),
         providers: formatQuery(providers),
       },
     ],
-    async () => await fetchMovies({ page: page + 1, genres, providers }),
-    { staleTime: Infinity }
-  );
-};
-
-export const prefetchTVShows = (
-  genres: Genre[],
-  providers: Provider[],
-  { queryClient, page, pageCount }: PrefetchConfig
-) => {
-  if (page >= pageCount) return;
-
-  queryClient.prefetchQuery(
-    [
-      '/tv',
-      {
-        page: page + 1,
-        genres: formatQuery(genres),
-        providers: formatQuery(providers),
-      },
-    ],
-    async () => await fetchTVShows({ page: page + 1, genres, providers }),
+    async () => await fetchAll(type, { page: page + 1, genres, providers }),
     { staleTime: Infinity }
   );
 };
