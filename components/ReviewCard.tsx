@@ -51,7 +51,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
             rounded='md'
           >
             <Icon as={AiFillStar} verticalAlign='middle' />
-            <Text>{review.rating}.0</Text>
+            <Text>{review.rating.toFixed(1)}</Text>
           </HStack>
         )}
       </HStack>
