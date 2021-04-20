@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import {
-  Box,
-  HStack,
-  Input,
-  LinkBox,
-  LinkOverlay,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, HStack, Input, Text, VStack } from '@chakra-ui/react';
 
 import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
+import { SearchResult } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
-import { ContentSummary, SearchResult } from '../lib/types';
 
 const Search = () => {
+  const router = useRouter();
+
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [shouldShow, setShouldShow] = useState(false);
@@ -45,7 +39,7 @@ const Search = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onFocus={() => setShouldShow(true)}
-        onBlur={() => setTimeout(() => setShouldShow(false), 100)}
+        onBlur={() => setShouldShow(false)}
         placeholder='Search movies or TV shows...'
       />
       {shouldShow && (
@@ -59,23 +53,26 @@ const Search = () => {
           border='1px solid black'
         >
           {results.map((result, index) => (
-            <LinkBox key={index}>
-              <HStack px='2' py='1'>
-                <Image
-                  src={IMAGE_URL + result.posterPath}
-                  alt={result.title}
-                  width='30'
-                  height='45'
-                />
-                <Link href={`/${result.type}/${result.id}`} passHref>
-                  <LinkOverlay onClick={() => setSearch('')}>
-                    <Text as='span' noOfLines={1}>
-                      {result.title}
-                    </Text>
-                  </LinkOverlay>
-                </Link>
-              </HStack>
-            </LinkBox>
+            <HStack
+              key={index}
+              px='2'
+              py='1'
+              onMouseDown={() => {
+                setSearch('');
+                router.push(`/${result.type}/${result.id}`);
+              }}
+              _hover={{ cursor: 'pointer' }}
+            >
+              <Image
+                src={IMAGE_URL + result.posterPath}
+                alt={result.title}
+                width='30'
+                height='45'
+              />
+              <Text as='span' noOfLines={1}>
+                {result.title}
+              </Text>
+            </HStack>
           ))}
         </VStack>
       )}

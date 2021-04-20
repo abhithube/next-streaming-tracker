@@ -42,7 +42,7 @@ const Navbar = () => {
             </LinkOverlay>
           </NextLink>
         </LinkBox>
-        <HStack spacing='4' w='100%'>
+        <HStack spacing='8' w='100%'>
           <Box _hover={{ color: 'red.500' }}>
             <Link as={NextLink} href='/movie'>
               Movies
