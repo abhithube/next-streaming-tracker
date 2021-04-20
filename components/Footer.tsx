@@ -16,7 +16,13 @@ const Footer = () => {
           Powered by
         </Text>
         <Box as='span' h='20px' mr='6'>
-          <Image src='/tmdb.svg' alt='TMDB logo' width='150' height='20' />
+          <Image
+            src='/tmdb.svg'
+            alt='TMDB logo'
+            width='150'
+            height='20'
+            loading='eager'
+          />
         </Box>
         <Box as='span' h='20px'>
           <Image
@@ -24,6 +30,7 @@ const Footer = () => {
             alt='Just Watch logo'
             width='133'
             height='20'
+            loading='eager'
           />
         </Box>
       </Center>
