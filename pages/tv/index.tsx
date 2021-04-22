@@ -9,15 +9,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import TVShowCard from '../../components/SummaryCard';
+import SummaryCard from '../../components/SummaryCard';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
 import useFetch from '../../lib/hooks/useFetch';
-import { Genre, Provider, ContentSummary } from '../../lib/types';
 import { fetchAll, fetchGenres } from '../../lib/util/fetch';
+import { ContentSummary, Genre, Provider } from '../../lib/types';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
-import SummaryCard from '../../components/SummaryCard';
 
 type TVShowsPageProps = {
   initResults: ContentSummary[];

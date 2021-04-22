@@ -1,9 +1,9 @@
 import { useQuery, useQueryClient } from 'react-query';
 
-import { Content, Genre, ContentSummary, Provider } from '../types';
 import { fetchAll } from '../util/fetch';
 import { formatQuery } from '../util/format';
 import { prefetch } from '../util/prefetch';
+import { Content, ContentSummary, Genre, Provider } from '../types';
 
 type useFetchDef = {
   page: number;

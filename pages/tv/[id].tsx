@@ -3,8 +3,8 @@ import { Box } from '@chakra-ui/react';
 
 import DetailsHeader from '../../components/DetailsHeader';
 import Meta from '../../components/Meta';
-import { ContentDetails } from '../../lib/types';
 import { fetchAll, fetchOne } from '../../lib/util/fetch';
+import { ContentDetails } from '../../lib/types';
 
 type TVShowPageProps = { tvShowDetails: ContentDetails };
 

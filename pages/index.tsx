@@ -1,21 +1,19 @@
+import Link from 'next/link';
+import { GetStaticProps } from 'next';
 import {
   Box,
-  Button,
   Container,
   Heading,
-  HStack,
   SimpleGrid,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
 
-import Meta from '../components/Meta';
 import WrapperImage from '../components/WrapperImage';
-import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
-import { ContentSummary } from '../lib/types';
+import Meta from '../components/Meta';
 import { fetchAll } from '../lib/util/fetch';
+import { ContentSummary } from '../lib/types';
+import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
 
 type HomeProps = {
   movies: ContentSummary[];

@@ -10,16 +10,16 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
+import { AiFillStar } from 'react-icons/ai';
 
 import WrapperImage from './WrapperImage';
-import { ContentDetails } from '../lib/types';
 import {
   formatAgeRating,
   formatReleaseYear,
   formatRuntime,
 } from '../lib/util/format';
+import { ContentDetails } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
-import { AiFillStar } from 'react-icons/ai';
 
 type DetailsOverviewProps = { contentDetails: ContentDetails };
 

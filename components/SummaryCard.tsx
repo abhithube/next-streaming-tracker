@@ -11,9 +11,9 @@ import {
 import { AiFillStar } from 'react-icons/ai';
 
 import WrapperImage from './WrapperImage';
+import { formatReleaseDate } from '../lib/util/format';
 import { Content, ContentSummary } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
-import { formatReleaseDate } from '../lib/util/format';
 
 type SummaryCardProps = { type: Content; contentSummary: ContentSummary };
 

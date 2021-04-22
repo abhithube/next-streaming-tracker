@@ -14,8 +14,8 @@ import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
 import useFetch from '../../lib/hooks/useFetch';
-import { Genre, ContentSummary, Provider } from '../../lib/types';
 import { fetchGenres, fetchAll } from '../../lib/util/fetch';
+import { ContentSummary, Genre, Provider } from '../../lib/types';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
 
 type MoviesPageProps = {

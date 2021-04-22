@@ -1,4 +1,4 @@
-import { Center, HStack, Stack, Text, VStack } from '@chakra-ui/react';
+import { Center, Stack, Text, VStack } from '@chakra-ui/react';
 
 import DetailsOverview from './DetailsOverview';
 import WrapperImage from './WrapperImage';

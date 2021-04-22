@@ -1,5 +1,5 @@
-import { Box, Button, Divider, Flex, Heading } from '@chakra-ui/react';
 import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Box, Button, Divider, Flex, Heading } from '@chakra-ui/react';
 
 type FilterProps = {
   type: string;

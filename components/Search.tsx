@@ -12,8 +12,8 @@ import {
 } from '@chakra-ui/react';
 
 import WrapperImage from './WrapperImage';
-import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
+import useDebounce from '../lib/hooks/useDebounce';
 import { SearchResult } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
 

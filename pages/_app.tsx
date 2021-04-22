@@ -5,8 +5,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Box, ChakraProvider, CSSReset } from '@chakra-ui/react';
 
 import Navbar from '../components/Navbar';
-import '../global.css';
 import Footer from '../components/Footer';
+import '../global.css';
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 axios.defaults.params = { api_key: process.env.NEXT_PUBLIC_API_KEY };
