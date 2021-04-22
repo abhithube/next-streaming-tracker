@@ -13,6 +13,7 @@ export const parseAll = (results: any[]): ContentSummary[] => {
       id: result.id,
       title: result.title || result.name,
       posterPath: result.poster_path,
+      backdropPath: result.backdrop_path,
       releaseDate: result.release_date || result.first_air_date,
       voteAverage: result.vote_average,
     };

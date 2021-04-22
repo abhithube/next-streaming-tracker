@@ -2,6 +2,7 @@ export type ContentSummary = {
   id: number;
   title: string;
   posterPath: string;
+  backdropPath: string;
   releaseDate: string;
   voteAverage: number;
 };
