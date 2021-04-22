@@ -28,9 +28,11 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
     <Flex direction='column' align='flex-start' flexBasis='66%'>
       <Heading as='h1' mb='4'>
         {`${contentDetails.title} `}
-        <Text as='span' fontWeight='normal' color='gray.400'>
-          ({formatReleaseYear(contentDetails.releaseDate)})
-        </Text>
+        {contentDetails.releaseDate && (
+          <Text as='span' fontWeight='normal' color='gray.400'>
+            ({formatReleaseYear(contentDetails.releaseDate)})
+          </Text>
+        )}
       </Heading>
       <HStack h='6' mb='6'>
         <Badge
@@ -62,8 +64,7 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
       {contentDetails.providers.length > 0 && (
         <HStack
           mb='8'
-          px='4'
-          py='2'
+          p='4'
           bgColor='gray.900'
           border='1px'
           borderColor='gray.600'
@@ -77,8 +78,8 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
               <WrapperImage
                 src={IMAGE_URL + provider.logoPath}
                 alt={provider.name}
-                width='45px'
-                height='45px'
+                width='36px'
+                height='36px'
                 rounded='md'
               />
             </Fragment>

@@ -57,9 +57,12 @@ export const fetchOne = async (type: Content, id: string) => {
       type,
       data.release_dates?.results || data.content_ratings?.results
     ),
-    runtime: data.runtime || data.episode_run_time[0] || null,
+    runtime:
+      data.runtime ||
+      (data.episode_run_time && data.episode_run_time[0]) ||
+      null,
     genres: parseGenres(data.genres),
-    releaseDate: data.release_date || data.first_air_date,
+    releaseDate: data.release_date || data.first_air_date || null,
     creators: parseCreators(type, data.created_by || data.credits.crew),
     providers: parseProviders(data['watch/providers'].results),
   };

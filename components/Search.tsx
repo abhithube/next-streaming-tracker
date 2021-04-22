@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Box,
+  Divider,
+  Flex,
   HStack,
   Input,
   LinkBox,
   LinkOverlay,
   Text,
-  VStack,
 } from '@chakra-ui/react';
 
+import WrapperImage from './WrapperImage';
 import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
 import { SearchResult } from '../lib/types';
@@ -55,7 +56,7 @@ const Search = () => {
   return (
     <Box>
       <Input
-        w='500px'
+        w='33vw'
         bgColor='white'
         color='black'
         value={search}
@@ -64,24 +65,26 @@ const Search = () => {
         ref={inputRef}
       />
       {shouldShow && (
-        <VStack
-          w='500px'
+        <Flex
+          direction='column'
+          w='33vw'
           pos='absolute'
           zIndex='1'
-          align='flex-start'
+          align='stretch'
           color='black'
           bgColor='white'
           border='1px solid black'
           ref={divRef}
         >
           {results.map((result, index) => (
-            <LinkBox key={index}>
-              <HStack px='2' py='1'>
-                <Image
+            <LinkBox key={index} _hover={{ bgColor: 'gray.100' }}>
+              <HStack p='2'>
+                <WrapperImage
                   src={IMAGE_URL + result.posterPath}
                   alt={result.title}
                   width='30'
                   height='45'
+                  rounded='sm'
                 />
                 <Link href={`/${result.type}/${result.id}`} passHref>
                   <LinkOverlay onClick={() => setSearch('')}>
@@ -91,9 +94,10 @@ const Search = () => {
                   </LinkOverlay>
                 </Link>
               </HStack>
+              <Divider w='100%' borderWidth='0.5px' />
             </LinkBox>
           ))}
-        </VStack>
+        </Flex>
       )}
     </Box>
   );
