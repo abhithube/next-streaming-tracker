@@ -7,11 +7,11 @@ import {
   Heading,
   HStack,
   Icon,
-  Image,
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
 
+import WrapperImage from './WrapperImage';
 import { ContentDetails } from '../lib/types';
 import {
   formatAgeRating,
@@ -61,7 +61,6 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
       </HStack>
       {contentDetails.providers.length > 0 && (
         <HStack
-          spacing='4'
           mb='8'
           px='4'
           py='2'
@@ -70,15 +69,15 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
           borderColor='gray.600'
           rounded='md'
         >
-          <Text fontWeight='bold' fontSize='lg'>
+          <Text fontWeight='bold' fontSize='lg' mr='4'>
             NOW STREAMING ON
           </Text>
           {contentDetails.providers.map((provider) => (
             <Fragment key={provider.id}>
-              <Image
+              <WrapperImage
                 src={IMAGE_URL + provider.logoPath}
                 alt={provider.name}
-                w='45px'
+                width='45px'
                 height='45px'
                 rounded='md'
               />
