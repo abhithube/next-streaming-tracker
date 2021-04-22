@@ -1,7 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import { Box, HStack, Input, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  HStack,
+  Input,
+  LinkBox,
+  LinkOverlay,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 
 import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
@@ -9,8 +17,6 @@ import { SearchResult } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
 
 const Search = () => {
-  const router = useRouter();
-
   const [search, setSearch] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [shouldShow, setShouldShow] = useState(false);
@@ -18,6 +24,9 @@ const Search = () => {
   const debouncedSearch = useDebounce(search, 500);
 
   const { data } = useSearch(debouncedSearch);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const divRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (data) {
@@ -30,6 +39,19 @@ const Search = () => {
     if (debouncedSearch.length === 0) setResults([]);
   }, [debouncedSearch]);
 
+  const handleClick = (e: MouseEvent) => {
+    if (e.target === inputRef.current) setShouldShow(true);
+    else if ((e.target as HTMLElement).parentNode !== divRef.current) {
+      setShouldShow(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
     <Box>
       <Input
@@ -38,9 +60,8 @@ const Search = () => {
         color='black'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        onFocus={() => setShouldShow(true)}
-        onBlur={() => setShouldShow(false)}
         placeholder='Search movies or TV shows...'
+        ref={inputRef}
       />
       {shouldShow && (
         <VStack
@@ -51,28 +72,26 @@ const Search = () => {
           color='black'
           bgColor='white'
           border='1px solid black'
+          ref={divRef}
         >
           {results.map((result, index) => (
-            <HStack
-              key={index}
-              px='2'
-              py='1'
-              onMouseDown={() => {
-                setSearch('');
-                router.push(`/${result.type}/${result.id}`);
-              }}
-              _hover={{ cursor: 'pointer' }}
-            >
-              <Image
-                src={IMAGE_URL + result.posterPath}
-                alt={result.title}
-                width='30'
-                height='45'
-              />
-              <Text as='span' noOfLines={1}>
-                {result.title}
-              </Text>
-            </HStack>
+            <LinkBox key={index}>
+              <HStack px='2' py='1'>
+                <Image
+                  src={IMAGE_URL + result.posterPath}
+                  alt={result.title}
+                  width='30'
+                  height='45'
+                />
+                <Link href={`/${result.type}/${result.id}`} passHref>
+                  <LinkOverlay onClick={() => setSearch('')}>
+                    <Text as='span' noOfLines={1}>
+                      {result.title}
+                    </Text>
+                  </LinkOverlay>
+                </Link>
+              </HStack>
+            </LinkBox>
           ))}
         </VStack>
       )}
