@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     if (!tvShowDetails) return { notFound: true };
 
-    return { props: { tvShowDetails } };
+    return { props: { tvShowDetails }, revalidate: 60 * 60 * 6 };
   } catch (err) {
     return { notFound: true };
   }

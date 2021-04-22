@@ -112,5 +112,6 @@ export const getStaticProps: GetStaticProps = async () => {
       tvShows: tvShows.slice(0, 5),
       backdropPath,
     },
+    revalidate: 60 * 60 * 6,
   };
 };

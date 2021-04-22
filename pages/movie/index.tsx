@@ -134,5 +134,6 @@ export const getStaticProps: GetStaticProps = async () => {
       genreList,
       providerList: SUPPORTED_PROVIDERS,
     },
+    revalidate: 60 * 60 * 6,
   };
 };
