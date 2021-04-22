@@ -60,7 +60,7 @@ const MoviesPage = ({
     );
 
   return (
-    <Container maxW='80%' mt='8' pb='16'>
+    <Container maxW='80%' mt='8' pb='32'>
       <Meta
         title='Movies'
         description='Popular movies currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max'

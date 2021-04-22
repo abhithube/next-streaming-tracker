@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Box, Center, Flex, Text } from '@chakra-ui/react';
+import { Box, Center, Divider, Text } from '@chakra-ui/react';
 
 const Footer = () => {
   return (
@@ -15,7 +15,7 @@ const Footer = () => {
         <Text as='span' color='white' mr='4'>
           Powered by
         </Text>
-        <Box as='span' h='20px' mr='6'>
+        <Box as='span' h='20px'>
           <Image
             src='/tmdb.svg'
             alt='TMDB logo'
@@ -24,6 +24,12 @@ const Footer = () => {
             loading='eager'
           />
         </Box>
+        <Divider
+          orientation='vertical'
+          mx='4'
+          height='50%'
+          borderColor='gray.400'
+        />
         <Box as='span' h='20px'>
           <Image
             src='/justwatch.png'

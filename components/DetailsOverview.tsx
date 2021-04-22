@@ -46,7 +46,7 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
           <Text>
             {contentDetails.voteAverage.toFixed(1)}{' '}
             <Text as='span' color='gray.400'>
-              ({contentDetails.voteCount})
+              ({contentDetails.voteCount.toLocaleString()})
             </Text>
           </Text>
         </HStack>
