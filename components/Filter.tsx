@@ -22,7 +22,7 @@ const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
 
   return (
     <Box flexBasis='50%'>
-      <Heading as='h3' fontSize='xl'>
+      <Heading as='h3' fontSize='lg' fontWeight='semibold'>
         {type}
       </Heading>
       <Divider my='4' w='90%' />
@@ -31,7 +31,7 @@ const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
           <Fragment key={item.id}>
             <Button
               onClick={() => onClick(item)}
-              colorScheme={selected.includes(item) ? 'blue' : 'gray'}
+              colorScheme={selected.includes(item) ? 'red' : 'gray'}
               mr='4'
               mb='4'
             >

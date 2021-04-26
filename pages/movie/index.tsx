@@ -1,20 +1,13 @@
 import { Fragment, useEffect, useState } from 'react';
 import { GetStaticProps } from 'next';
-import {
-  Button,
-  Container,
-  Flex,
-  Heading,
-  SimpleGrid,
-  Text,
-} from '@chakra-ui/react';
+import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 
 import SummaryCard from '../../components/SummaryCard';
-import Filter from '../../components/Filter';
+import FilterAccordian from '../../components/FilterAccordian';
 import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
 import useFetch from '../../lib/hooks/useFetch';
-import { fetchGenres, fetchAll } from '../../lib/util/fetch';
+import { fetchAll, fetchGenres } from '../../lib/util/fetch';
 import { ContentSummary, Genre, Provider } from '../../lib/types';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
 
@@ -25,7 +18,7 @@ type MoviesPageProps = {
   providerList: Provider[];
 };
 
-type QueryDef = {
+export type QueryDef = {
   genres: Genre[];
   providers: Provider[];
 };
@@ -38,10 +31,7 @@ const MoviesPage = ({
 }: MoviesPageProps) => {
   const [page, setPage] = useState(1);
 
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [providers, setProviders] = useState<Provider[]>([]);
-
-  const [query, setQuery] = useState<QueryDef>({ genres, providers });
+  const [query, setQuery] = useState<QueryDef>({ genres: [], providers: [] });
 
   const { data, error } = useFetch('movie', {
     page,
@@ -52,12 +42,7 @@ const MoviesPage = ({
   useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [page]);
 
   if (error)
-    return (
-      <Text>
-        Our selection of movie titles is not available at this time. Try again
-        later.
-      </Text>
-    );
+    return <Text>Our selection of movies is not available at this time.</Text>;
 
   return (
     <Container maxW='80%' mt='8' pb='32'>
@@ -68,30 +53,12 @@ const MoviesPage = ({
       <Heading as='h1' mb='8'>
         Popular Movies
       </Heading>
-      <Flex direction='row' mb='4'>
-        <Filter
-          type='Genres'
-          list={genreList}
-          selected={genres}
-          setSelected={setGenres}
-        />
-        <Filter
-          type='Providers'
-          list={providerList}
-          selected={providers}
-          setSelected={setProviders}
-        />
-      </Flex>
-      <Button
-        onClick={() => {
-          setQuery({ genres, providers });
-          setPage(1);
-        }}
-        w='100%'
-        colorScheme='blue'
-      >
-        Go!
-      </Button>
+      <FilterAccordian
+        genreList={genreList}
+        providerList={providerList}
+        setPage={setPage}
+        setQuery={setQuery}
+      />
       {data!.results.length > 0 ? (
         <>
           <Pagination
@@ -113,7 +80,7 @@ const MoviesPage = ({
           />
         </>
       ) : (
-        <Text>There are no movie titles matching the selected filters.</Text>
+        <Text>There are no movies matching the selected filters.</Text>
       )}
     </Container>
   );
