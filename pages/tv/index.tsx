@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      initResults: results,
+      initTVShows: results,
       initPageCount: pageCount,
       genreList,
       providerList: SUPPORTED_PROVIDERS,
