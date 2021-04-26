@@ -37,8 +37,8 @@ export const parseAgeRating = (type: Content, data: any[]): string => {
 
   if (type === 'movie') {
     const releaseDates = usReleases.release_dates;
-    return releaseDates[releaseDates.length - 1].certification;
-  } else return usReleases.rating;
+    return releaseDates[releaseDates.length - 1].certification || 'NR';
+  } else return usReleases.rating || 'NR';
 };
 
 export const parseGenres = (data: any[]) => {
