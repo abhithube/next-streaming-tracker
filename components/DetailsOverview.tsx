@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import {
   Badge,
   Box,
@@ -64,26 +63,30 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
       {contentDetails.providers.length > 0 && (
         <HStack
           mb='8'
-          p='4'
+          p='2'
+          pl='4'
           bgColor='gray.900'
           border='1px'
           borderColor='gray.600'
           rounded='md'
         >
-          <Text fontWeight='bold' fontSize='lg' mr='4'>
+          <Text fontWeight='bold' fontSize='lg'>
             NOW STREAMING ON
           </Text>
-          {contentDetails.providers.map((provider) => (
-            <Fragment key={provider.id}>
-              <WrapperImage
-                src={IMAGE_URL + provider.logoPath}
-                alt={provider.name}
-                width='36px'
-                height='36px'
-                rounded='md'
-              />
-            </Fragment>
-          ))}
+          <Flex>
+            {contentDetails.providers.map((provider) => (
+              <Box key={provider.id} m='2' mb='0'>
+                <WrapperImage
+                  src={IMAGE_URL + provider.logoPath}
+                  alt={provider.name}
+                  width='36px'
+                  height='36px'
+                  loading='eager'
+                  rounded='md'
+                />
+              </Box>
+            ))}
+          </Flex>
         </HStack>
       )}
       <Heading fontSize='xl' mb='2'>

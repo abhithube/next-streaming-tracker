@@ -32,6 +32,7 @@ const DetailsHeader = ({ contentDetails }: DetailsHeaderProps) => {
             alt={contentDetails.title}
             width='360'
             height='540'
+            loading='eager'
             rounded='lg'
           />
           {contentDetails.tagline && (
