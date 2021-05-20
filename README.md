@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Trackit Streaming Tracker
 
-## Getting Started
+Trackit is a JAMstack application that allows users to track movies and TV shows on popular streaming sites - Netflix, Hulu, Amazon Prime Video, Disney+, and HBO Max.
 
-First, run the development server:
+The app, hosted on Vercel, can be found at https://trackit.abhithube.com.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- TypeScript
+- React
+- Next.js
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Track today's most popular movies and TV shows
+- Find results based on the services you're subscribed to (e.g. if you're subscribed to Netflix, you can limit content to only what's streaming on Netflix)
+- Search for movies and TV shows with autocomplete suggestions
+- Filter by genres
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## How It Works
 
-## Learn More
+Trackit uses the [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) to get movie and TV results. The details pages for the top 20 movies and TV shows are generated at build time using Next.js SSG (static site generation). Details pages for all other content are generated once during runtime when they are requested using ISG (incremental static generation) and then cached with the other pre-built pages. Furthermore, pages are regenerated at most once per day using ISR (incremental static regeneration) to keep the data up-to-date without having to rebuild the whole application.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The movie/TV list pages are client-side rendered. Because the data is paginated and changing every day, a newly released popular movie would cause the entire list to be outdated if it was generated at build time. For this reason, the `react-query` data-fetching library was used to fetch and render the data client-side. The first set of paginated results is pre-rendered to prevent a hard loading state, and the 'next' page is prefetched to further improve the user experience.
