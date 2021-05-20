@@ -24,8 +24,8 @@ export default function Home({ movies, tvShows, backdropPath }: HomeProps) {
   return (
     <Container maxW='80%' pt='8' pb='32'>
       <Meta
-        title='StreamDB'
-        description="StreamDB is a streaming tracker for movies and TV shows. See what's currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max"
+        title='Trackit'
+        description="Trackit is a streaming tracker for movies and TV shows. See what's currently streaming on Netflix, Hulu, Amazon Prime, Disney+, and HBO Max"
       />
       <Box
         pos='relative'

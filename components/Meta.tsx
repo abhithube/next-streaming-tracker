@@ -5,7 +5,7 @@ type MetaProps = { title: string; description: string };
 const Meta = ({ title, description }: MetaProps) => {
   return (
     <Head>
-      <title>{title + (title === 'StreamDB' ? '' : ' | StreamDB')}</title>
+      <title>{title + (title === 'Trackit' ? '' : ' | Trackit')}</title>
       <meta name='description' content={description} />
       <link rel='icon' href='/favicon.ico' />
     </Head>
