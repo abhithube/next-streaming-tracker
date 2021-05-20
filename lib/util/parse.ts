@@ -1,3 +1,4 @@
+import { SUPPORTED_PROVIDERS } from '../constants';
 import {
   Content,
   ContentSummary,
@@ -5,10 +6,9 @@ import {
   Provider,
   SearchResult,
 } from '../types';
-import { SUPPORTED_PROVIDERS } from '../constants';
 
 export const parseAll = (results: any[]): ContentSummary[] => {
-  return results.map((result) => {
+  return results.map(result => {
     return {
       id: result.id,
       title: result.title || result.name,
@@ -21,7 +21,7 @@ export const parseAll = (results: any[]): ContentSummary[] => {
 };
 
 export const parseSearch = (results: any[]): SearchResult[] => {
-  return results.map((result) => {
+  return results.map(result => {
     return {
       id: result.id,
       type: result.media_type,

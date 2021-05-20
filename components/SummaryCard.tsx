@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Heading,
   HStack,
@@ -8,12 +7,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { AiFillStar } from 'react-icons/ai';
-
-import WrapperImage from './WrapperImage';
-import { formatReleaseDate } from '../lib/util/format';
-import { Content, ContentSummary } from '../lib/types';
 import { IMAGE_URL } from '../lib/constants';
+import { Content, ContentSummary } from '../lib/types';
+import { formatReleaseDate } from '../lib/util/format';
+import WrapperImage from './WrapperImage';
 
 type SummaryCardProps = { type: Content; contentSummary: ContentSummary };
 

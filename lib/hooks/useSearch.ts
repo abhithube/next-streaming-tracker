@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-
 import { search } from '../util/fetch';
 
 const useSearch = (query: string) => {

@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import {
   Box,
   Divider,
@@ -10,12 +8,13 @@ import {
   LinkOverlay,
   Text,
 } from '@chakra-ui/react';
-
-import WrapperImage from './WrapperImage';
-import useSearch from '../lib/hooks/useSearch';
-import useDebounce from '../lib/hooks/useDebounce';
-import { SearchResult } from '../lib/types';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import { IMAGE_URL } from '../lib/constants';
+import useDebounce from '../lib/hooks/useDebounce';
+import useSearch from '../lib/hooks/useSearch';
+import { SearchResult } from '../lib/types';
+import WrapperImage from './WrapperImage';
 
 const Search = () => {
   const [search, setSearch] = useState('');
@@ -60,7 +59,7 @@ const Search = () => {
         bgColor='white'
         color='black'
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={e => setSearch(e.target.value)}
         placeholder='Search movies or TV shows...'
         ref={inputRef}
       />

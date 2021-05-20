@@ -1,9 +1,8 @@
 import { Center, Stack, Text, VStack } from '@chakra-ui/react';
-
+import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
+import { ContentDetails } from '../lib/types';
 import DetailsOverview from './DetailsOverview';
 import WrapperImage from './WrapperImage';
-import { ContentDetails } from '../lib/types';
-import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
 
 type DetailsHeaderProps = { contentDetails: ContentDetails };
 

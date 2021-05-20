@@ -1,5 +1,3 @@
-import * as React from 'react';
-import NextLink from 'next/link';
 import {
   Box,
   Center,
@@ -10,8 +8,9 @@ import {
   LinkBox,
   LinkOverlay,
 } from '@chakra-ui/react';
+import NextLink from 'next/link';
+import * as React from 'react';
 import { FcFilmReel } from 'react-icons/fc';
-
 import Search from './Search';
 
 const Navbar = () => {

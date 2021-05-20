@@ -1,5 +1,4 @@
 import { QueryClient } from 'react-query';
-
 import { Content, Genre, Provider } from '../types';
 import { fetchAll } from './fetch';
 import { formatQuery } from './format';

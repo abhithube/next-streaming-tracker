@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -10,10 +9,10 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
-
-import Filter from './Filter';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Genre, Provider } from '../lib/types';
 import { QueryDef } from '../pages/movie';
+import Filter from './Filter';
 
 type FilterAccordianProps = {
   genreList: Genre[];

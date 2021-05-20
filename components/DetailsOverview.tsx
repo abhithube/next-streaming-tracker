@@ -10,15 +10,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { AiFillStar } from 'react-icons/ai';
-
-import WrapperImage from './WrapperImage';
+import { IMAGE_URL } from '../lib/constants';
+import { ContentDetails } from '../lib/types';
 import {
   formatAgeRating,
   formatReleaseYear,
   formatRuntime,
 } from '../lib/util/format';
-import { ContentDetails } from '../lib/types';
-import { IMAGE_URL } from '../lib/constants';
+import WrapperImage from './WrapperImage';
 
 type DetailsOverviewProps = { contentDetails: ContentDetails };
 
@@ -74,7 +73,7 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
             NOW STREAMING ON
           </Text>
           <Flex>
-            {contentDetails.providers.map((provider) => (
+            {contentDetails.providers.map(provider => (
               <Box key={provider.id} m='2' mb='0'>
                 <WrapperImage
                   src={IMAGE_URL + provider.logoPath}
@@ -96,7 +95,7 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
         {contentDetails.overview}
       </Text>
       <SimpleGrid columns={[2, 2, 3]} spacing='2' mb='4' w='100%'>
-        {contentDetails.creators.map((person) => (
+        {contentDetails.creators.map(person => (
           <Box key={person.id} pr='8'>
             <Text fontWeight='bold'>{person.name}</Text>
             <Text color='gray.400'>{person.job}</Text>

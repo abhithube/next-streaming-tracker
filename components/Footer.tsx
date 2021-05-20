@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { Box, Center, Divider, Text } from '@chakra-ui/react';
+import Image from 'next/image';
 
 const Footer = () => {
   return (

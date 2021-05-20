@@ -1,5 +1,5 @@
-import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Box, Button, Divider, Flex, Heading } from '@chakra-ui/react';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 
 type FilterProps = {
   type: string;
@@ -27,7 +27,7 @@ const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
       </Heading>
       <Divider my='4' w='90%' />
       <Flex flexWrap='wrap'>
-        {list.map((item) => (
+        {list.map(item => (
           <Fragment key={item.id}>
             <Button
               onClick={() => onClick(item)}

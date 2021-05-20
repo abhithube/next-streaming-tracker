@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Content, ContentDetails, Genre, Provider } from '../types';
 import {
   parseAgeRating,
   parseAll,
@@ -8,7 +8,6 @@ import {
   parseProviders,
   parseSearch,
 } from './parse';
-import { Content, ContentDetails, Genre, Provider } from '../types';
 
 type DiscoverRequest = {
   page: number;

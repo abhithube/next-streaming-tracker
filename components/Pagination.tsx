@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
 import { HStack, Icon, IconButton, Text } from '@chakra-ui/react';
+import { Dispatch, SetStateAction } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 type PaginationProps = {
