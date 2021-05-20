@@ -31,7 +31,7 @@ export default function Home({ movies, tvShows, backdropPath }: HomeProps) {
         pos='relative'
         mb='8'
         pb='33%'
-        bgImg={`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(${
+        bg={`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url(${
           BACKDROP_URL + backdropPath
         })`}
         bgSize='cover'

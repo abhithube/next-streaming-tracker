@@ -9,7 +9,7 @@ type DetailsHeaderProps = { contentDetails: ContentDetails };
 const DetailsHeader = ({ contentDetails }: DetailsHeaderProps) => {
   return (
     <Center
-      bgImg={`
+      bg={`
         linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url(${
           BACKDROP_URL + contentDetails.backdropPath
         })
