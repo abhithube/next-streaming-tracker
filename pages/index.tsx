@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import { GetStaticProps } from 'next';
 import {
   Box,
   Container,
@@ -8,12 +6,13 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-
-import WrapperImage from '../components/WrapperImage';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import Meta from '../components/Meta';
-import { fetchAll } from '../lib/util/fetch';
-import { ContentSummary } from '../lib/types';
+import WrapperImage from '../components/WrapperImage';
 import { BACKDROP_URL, IMAGE_URL } from '../lib/constants';
+import { ContentSummary } from '../lib/types';
+import { fetchAll } from '../lib/util/fetch';
 
 type HomeProps = {
   movies: ContentSummary[];
@@ -59,7 +58,7 @@ export default function Home({ movies, tvShows, backdropPath }: HomeProps) {
       <Box mb='8'>
         <Heading mb='4'>Trending Movies</Heading>
         <SimpleGrid columns={[1, 1, 5, 5]} spacing={8}>
-          {movies.map((movie) => (
+          {movies.map(movie => (
             <Link key={movie.id} href={`/movie/${movie.id}`}>
               <a>
                 <WrapperImage
@@ -77,7 +76,7 @@ export default function Home({ movies, tvShows, backdropPath }: HomeProps) {
       <Box>
         <Heading mb='4'>Trending TV Shows</Heading>
         <SimpleGrid columns={[1, 1, 5, 5]} spacing={8}>
-          {tvShows.map((tvShow) => (
+          {tvShows.map(tvShow => (
             <Link key={tvShow.id} href={`/tv/${tvShow.id}`}>
               <a>
                 <WrapperImage
@@ -110,6 +109,6 @@ export const getStaticProps: GetStaticProps = async () => {
       tvShows: tvShows.slice(0, 5),
       backdropPath,
     },
-    revalidate: 60 * 60 * 6,
+    revalidate: 60 * 60 * 24,
   };
 };

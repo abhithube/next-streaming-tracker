@@ -1,15 +1,14 @@
-import { Fragment, useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
 import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
-
-import SummaryCard from '../../components/SummaryCard';
+import { GetStaticProps } from 'next';
+import { Fragment, useEffect, useState } from 'react';
 import FilterAccordian from '../../components/FilterAccordian';
-import Pagination from '../../components/Pagination';
 import Meta from '../../components/Meta';
-import useFetch from '../../lib/hooks/useFetch';
-import { fetchAll, fetchGenres } from '../../lib/util/fetch';
-import { ContentSummary, Genre, Provider } from '../../lib/types';
+import Pagination from '../../components/Pagination';
+import SummaryCard from '../../components/SummaryCard';
 import { SUPPORTED_PROVIDERS } from '../../lib/constants';
+import useFetch from '../../lib/hooks/useFetch';
+import { ContentSummary, Genre, Provider } from '../../lib/types';
+import { fetchAll, fetchGenres } from '../../lib/util/fetch';
 
 type TVShowsPageProps = {
   initTVShows: ContentSummary[];
@@ -69,7 +68,7 @@ const TVShowsPage = ({
             setPage={setPage}
           />
           <SimpleGrid columns={[1, 2, 4, 5]} spacing={8}>
-            {data!.results.map((tvShow) => (
+            {data!.results.map(tvShow => (
               <Fragment key={tvShow.id}>
                 <SummaryCard type='tv' contentSummary={tvShow} />
               </Fragment>
@@ -103,6 +102,6 @@ export const getStaticProps: GetStaticProps = async () => {
       genreList,
       providerList: SUPPORTED_PROVIDERS,
     },
-    revalidate: 60 * 60 * 6,
+    revalidate: 60 * 60 * 24,
   };
 };

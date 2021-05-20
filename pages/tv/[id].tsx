@@ -1,10 +1,9 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
 import { Box } from '@chakra-ui/react';
-
+import { GetStaticPaths, GetStaticProps } from 'next';
 import DetailsHeader from '../../components/DetailsHeader';
 import Meta from '../../components/Meta';
-import { fetchAll, fetchOne } from '../../lib/util/fetch';
 import { ContentDetails } from '../../lib/types';
+import { fetchAll, fetchOne } from '../../lib/util/fetch';
 
 type TVShowPageProps = { tvShowDetails: ContentDetails };
 
@@ -35,7 +34,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     if (!tvShowDetails) return { notFound: true };
 
-    return { props: { tvShowDetails }, revalidate: 60 * 60 * 6 };
+    return { props: { tvShowDetails }, revalidate: 60 * 60 * 24 };
   } catch (err) {
     return { notFound: true };
   }
