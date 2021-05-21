@@ -44,7 +44,7 @@ export default function Home({ movies, tvShows, backdropPath }: HomeProps) {
           bottom='0'
           p='5%'
           pos='absolute'
-          color='white'
+          color='gray.50'
         >
           <Heading as='h1' fontSize='7xl'>
             Welcome to Trackit!

@@ -19,7 +19,7 @@ const DetailsHeader = ({ contentDetails }: DetailsHeaderProps) => {
       bgSize='auto 100%'
       h='calc(100vh - 64px)'
       py='16'
-      color='white'
+      color='gray.50'
     >
       <Stack
         direction={['column', 'column', 'column', 'row']}

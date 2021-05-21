@@ -7,6 +7,7 @@ import {
   LinkBox,
   LinkOverlay,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -27,6 +28,10 @@ const Search = () => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const divRef = useRef<HTMLDivElement | null>(null);
+
+  const color = useColorModeValue('gray.900', 'gray.50');
+  const bgColor = useColorModeValue('gray.50', 'gray.900');
+  const hoverColor = useColorModeValue('gray.100', 'gray.800');
 
   useEffect(() => {
     if (data) {
@@ -60,6 +65,8 @@ const Search = () => {
         onChange={e => setSearch(e.target.value)}
         placeholder='Search movies or TV shows...'
         ref={inputRef}
+        borderColor='gray.500'
+        _hover={{ borderColor: 'gray.400' }}
       />
       {shouldShow && (
         <Flex
@@ -68,13 +75,12 @@ const Search = () => {
           pos='absolute'
           zIndex='1'
           align='stretch'
-          color='black'
-          bgColor='white'
-          border='1px solid black'
+          color={color}
+          bgColor={bgColor}
           ref={divRef}
         >
           {results.map((result, index) => (
-            <LinkBox key={index} _hover={{ bgColor: 'gray.100' }}>
+            <LinkBox key={index} _hover={{ bgColor: hoverColor }}>
               <HStack p='2'>
                 <WrapperImage
                   src={IMAGE_URL + result.posterPath}
@@ -91,7 +97,7 @@ const Search = () => {
                   </LinkOverlay>
                 </Link>
               </HStack>
-              <Divider w='100%' borderWidth='0.5px' />
+              <Divider />
             </LinkBox>
           ))}
         </Flex>

@@ -32,7 +32,7 @@ const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
           <Fragment key={item.id}>
             <Button
               onClick={() => handleClick(item.id)}
-              colorScheme={selected.includes(item.id) ? 'red' : 'gray'}
+              colorScheme={selected.includes(item.id) ? 'blue' : 'gray'}
               mr='4'
               mb='4'
             >

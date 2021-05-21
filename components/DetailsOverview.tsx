@@ -42,7 +42,7 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
         >
           {contentDetails.ageRating}
         </Badge>
-        <Divider orientation='vertical' />
+        <Divider orientation='vertical' borderColor='gray.500' />
         <HStack spacing='0.5'>
           <Icon as={AiFillStar} fontSize='xl' color='yellow.400' mr='0.5' />
           <Text>
@@ -52,11 +52,11 @@ const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
             </Text>
           </Text>
         </HStack>
-        <Divider orientation='vertical' />
+        <Divider orientation='vertical' borderColor='gray.500' />
         <Text>{contentDetails.genres}</Text>
         {contentDetails.runtime && (
           <>
-            <Divider orientation='vertical' />
+            <Divider orientation='vertical' borderColor='gray.500' />
             <Text>{formatRuntime(contentDetails.runtime)}</Text>
           </>
         )}

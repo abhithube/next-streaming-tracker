@@ -34,7 +34,7 @@ const Footer = () => {
           orientation='vertical'
           mx='4'
           height='50%'
-          borderColor='gray.400'
+          borderColor={useColorModeValue('gray.400', 'gray.500')}
         />
         <Box as='span' h='20px'>
           <Image

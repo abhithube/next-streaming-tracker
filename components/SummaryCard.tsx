@@ -5,6 +5,7 @@ import {
   LinkBox,
   LinkOverlay,
   Text,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
@@ -21,7 +22,11 @@ type SummaryCardProps = {
 
 const SummaryCard = ({ type, contentSummary }: SummaryCardProps) => {
   return (
-    <LinkBox roundedBottom='lg' shadow='md'>
+    <LinkBox
+      roundedBottom='lg'
+      shadow='md'
+      bgColor={useColorModeValue('gray.50', 'gray.900')}
+    >
       <WrapperImage
         src={IMAGE_URL + contentSummary.posterPath}
         alt={contentSummary.title}
@@ -41,7 +46,7 @@ const SummaryCard = ({ type, contentSummary }: SummaryCardProps) => {
             </Heading>
           </LinkOverlay>
         </Link>
-        <Text fontSize='sm' color='gray.600'>
+        <Text fontSize='sm' color='gray.500'>
           {formatReleaseDate(contentSummary.releaseDate)}
         </Text>
       </VStack>

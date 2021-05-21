@@ -20,6 +20,8 @@ import Search from './Search';
 const Navbar = () => {
   const { toggleColorMode } = useColorMode();
 
+  const color = useColorModeValue('red.500', 'red.200');
+
   return (
     <Center
       as='nav'
@@ -47,17 +49,17 @@ const Navbar = () => {
           </NextLink>
         </LinkBox>
         <HStack spacing='8' w='100%'>
-          <Box _hover={{ color: 'red.500' }}>
+          <Box _hover={{ color }}>
             <Link as={NextLink} href='/movie'>
               Movies
             </Link>
           </Box>
-          <Box _hover={{ color: 'red.500' }}>
+          <Box _hover={{ color }}>
             <Link as={NextLink} href='/tv'>
               TV Shows
             </Link>
           </Box>
-          <Box _hover={{ color: 'red.500' }}>
+          <Box _hover={{ color }}>
             <Link as={NextLink} href='/about'>
               About
             </Link>
