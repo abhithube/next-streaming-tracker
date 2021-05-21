@@ -23,7 +23,7 @@ type SummaryCardProps = {
 const SummaryCard = ({ type, contentSummary }: SummaryCardProps) => {
   return (
     <LinkBox
-      roundedBottom='lg'
+      rounded='lg'
       shadow='md'
       bgColor={useColorModeValue('gray.50', 'gray.900')}
     >
