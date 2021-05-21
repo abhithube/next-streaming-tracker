@@ -14,7 +14,10 @@ import { Content, ContentSummary } from '../lib/types';
 import { formatReleaseDate } from '../lib/util/format';
 import WrapperImage from './WrapperImage';
 
-type SummaryCardProps = { type: Content; contentSummary: ContentSummary };
+type SummaryCardProps = {
+  type: Content;
+  contentSummary: ContentSummary;
+};
 
 const SummaryCard = ({ type, contentSummary }: SummaryCardProps) => {
   return (

@@ -5,9 +5,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 0,
 });
 
-export const formatCurrency = (data: number) => {
-  return currencyFormatter.format(data);
-};
+export const formatCurrency = (data: number) => currencyFormatter.format(data);
 
 export const formatRuntime = (data: number) => {
   const hour = Math.floor(data / 60);
@@ -38,9 +36,7 @@ export const formatAgeRating = (data: string) => {
   }
 };
 
-export const formatReleaseYear = (data: string) => {
-  return new Date(data).getFullYear();
-};
+export const formatReleaseYear = (data: string) => new Date(data).getFullYear();
 
 export const formatReleaseDate = (data: string) => {
   return new Date(data).toLocaleDateString('en-US', {
@@ -48,11 +44,4 @@ export const formatReleaseDate = (data: string) => {
     day: '2-digit',
     year: 'numeric',
   });
-};
-
-export const formatQuery = (data: any[]) => {
-  return data
-    .sort()
-    .map(({ name }) => name)
-    .join(', ');
 };

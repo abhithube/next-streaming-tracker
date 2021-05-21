@@ -19,7 +19,9 @@ import {
 } from '../lib/util/format';
 import WrapperImage from './WrapperImage';
 
-type DetailsOverviewProps = { contentDetails: ContentDetails };
+type DetailsOverviewProps = {
+  contentDetails: ContentDetails;
+};
 
 const DetailsOverview = ({ contentDetails }: DetailsOverviewProps) => {
   return (

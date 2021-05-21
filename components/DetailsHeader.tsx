@@ -4,7 +4,9 @@ import { ContentDetails } from '../lib/types';
 import DetailsOverview from './DetailsOverview';
 import WrapperImage from './WrapperImage';
 
-type DetailsHeaderProps = { contentDetails: ContentDetails };
+type DetailsHeaderProps = {
+  contentDetails: ContentDetails;
+};
 
 const DetailsHeader = ({ contentDetails }: DetailsHeaderProps) => {
   return (
