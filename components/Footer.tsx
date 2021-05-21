@@ -1,4 +1,10 @@
-import { Box, Center, Divider, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Divider,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Image from 'next/image';
 
 const Footer = () => {
@@ -9,10 +15,10 @@ const Footer = () => {
       pos='absolute'
       w='100%'
       bottom='0'
-      bgColor='gray.800'
+      bgColor={useColorModeValue('gray.100', 'gray.900')}
     >
       <Center h='100%'>
-        <Text as='span' color='white' mr='4'>
+        <Text as='span' mr='4'>
           Powered by
         </Text>
         <Box as='span' h='20px'>

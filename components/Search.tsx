@@ -56,8 +56,6 @@ const Search = () => {
     <Box>
       <Input
         w='33vw'
-        bgColor='white'
-        color='black'
         value={search}
         onChange={e => setSearch(e.target.value)}
         placeholder='Search movies or TV shows...'

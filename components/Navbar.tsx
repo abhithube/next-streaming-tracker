@@ -4,16 +4,22 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   Link,
   LinkBox,
   LinkOverlay,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import * as React from 'react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import { FcFilmReel } from 'react-icons/fc';
 import Search from './Search';
 
 const Navbar = () => {
+  const { toggleColorMode } = useColorMode();
+
   return (
     <Center
       as='nav'
@@ -21,8 +27,7 @@ const Navbar = () => {
       pos='fixed'
       zIndex='1'
       h='16'
-      bgColor='gray.800'
-      color='white'
+      bgColor={useColorModeValue('gray.50', 'gray.900')}
     >
       <HStack w='80%' spacing='8'>
         <LinkBox>
@@ -59,6 +64,12 @@ const Navbar = () => {
           </Box>
         </HStack>
         <Search />
+        <IconButton
+          aria-label='toggle dark mode'
+          onClick={toggleColorMode}
+          icon={useColorModeValue(<FaMoon />, <FaSun />)}
+          ml='6'
+        />
       </HStack>
     </Center>
   );
