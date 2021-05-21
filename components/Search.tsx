@@ -3,7 +3,10 @@ import {
   Divider,
   Flex,
   HStack,
+  Icon,
   Input,
+  InputGroup,
+  InputLeftElement,
   LinkBox,
   LinkOverlay,
   Text,
@@ -11,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { IMAGE_URL } from '../lib/constants';
 import useDebounce from '../lib/hooks/useDebounce';
 import useSearch from '../lib/hooks/useSearch';
@@ -59,22 +63,26 @@ const Search = () => {
 
   return (
     <Box>
-      <Input
-        w='33vw'
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        placeholder='Search movies or TV shows...'
-        ref={inputRef}
-        borderColor='gray.500'
-        _hover={{ borderColor: 'gray.400' }}
-      />
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents='none'
+          children={<Icon as={FaSearch} color='gray.500' />}
+        />
+        <Input
+          w='20vw'
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder='Search movies or TV shows...'
+          ref={inputRef}
+          borderColor='gray.500'
+          _hover={{ borderColor: 'gray.400' }}
+        />
+      </InputGroup>
       {shouldShow && (
         <Flex
           direction='column'
-          w='33vw'
+          w='20%'
           pos='absolute'
-          zIndex='1'
-          align='stretch'
           color={color}
           bgColor={bgColor}
           ref={divRef}
