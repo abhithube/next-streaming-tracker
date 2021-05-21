@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Content, ContentDetails, Genre, Provider } from '../types';
+import { Content, ContentDetails, Genre } from '../types';
 import {
   parseAgeRating,
   parseAll,
@@ -11,8 +11,8 @@ import {
 
 type DiscoverRequest = {
   page: number;
-  genres?: Provider[];
-  providers?: Provider[];
+  genres?: string;
+  providers?: string;
 };
 
 export const fetchAll = async (
@@ -21,9 +21,9 @@ export const fetchAll = async (
 ) => {
   let params: any = { page };
 
-  if (genres) params.with_genres = genres.map(({ id }) => id).join(',');
+  if (genres) params.with_genres = genres;
   if (providers) {
-    params.with_watch_providers = providers.map(({ id }) => id).join('|');
+    params.with_watch_providers = providers;
     params.watch_region = 'US';
     params.with_watch_monetization_types = 'flatrate';
   }
@@ -84,7 +84,7 @@ export const search = async (query: string) => {
   return parseSearch(results);
 };
 
-export const fetchGenres = async (type: 'movie' | 'tv'): Promise<Genre[]> => {
+export const fetchGenres = async (type: Content): Promise<Genre[]> => {
   const { data } = await axios.get(`/genre/${type}/list`);
   return data.genres;
 };

@@ -5,30 +5,44 @@ import {
   AccordionItem,
   AccordionPanel,
   Button,
+  ButtonGroup,
   Flex,
   Heading,
   Text,
 } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
+import { useEffect, useState } from 'react';
 import { Genre, Provider } from '../lib/types';
-import { QueryDef } from '../pages/movie';
 import Filter from './Filter';
 
 type FilterAccordianProps = {
   genreList: Genre[];
   providerList: Provider[];
-  setPage: Dispatch<SetStateAction<number>>;
-  setQuery: Dispatch<SetStateAction<QueryDef>>;
 };
 
-const FilterAccordian = ({
-  genreList,
-  providerList,
-  setPage,
-  setQuery,
-}: FilterAccordianProps) => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [providers, setProviders] = useState<Provider[]>([]);
+const FilterAccordian = ({ genreList, providerList }: FilterAccordianProps) => {
+  const router = useRouter();
+
+  const [genres, setGenres] = useState<number[]>([]);
+  const [providers, setProviders] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (router.query.genres)
+      setGenres(
+        String(router.query.genres)
+          .split(',')
+          .map(id => Number(id))
+      );
+    else setGenres([]);
+
+    if (router.query.providers)
+      setProviders(
+        String(router.query.providers)
+          .split(',')
+          .map(id => Number(id))
+      );
+    else setProviders([]);
+  }, [router.query]);
 
   return (
     <Accordion allowToggle>
@@ -56,16 +70,48 @@ const FilterAccordian = ({
               setSelected={setProviders}
             />
           </Flex>
-          <Button
-            onClick={() => {
-              setQuery({ genres, providers });
-              setPage(1);
-            }}
-            w='100%'
-            colorScheme='red'
-          >
-            Go!
-          </Button>
+          <ButtonGroup w='100%'>
+            <Button
+              onClick={() => {
+                router.push(
+                  {
+                    query: {
+                      ...router.query,
+                      genres: '',
+                      providers: '',
+                      page: 1,
+                    },
+                  },
+                  undefined,
+                  { shallow: true }
+                );
+              }}
+              w='50%'
+              colorScheme='red'
+            >
+              Reset
+            </Button>
+            <Button
+              onClick={() => {
+                router.push(
+                  {
+                    query: {
+                      ...router.query,
+                      genres: genres.sort().join(','),
+                      providers: providers.sort().join('|'),
+                      page: 1,
+                    },
+                  },
+                  undefined,
+                  { shallow: true }
+                );
+              }}
+              w='50%'
+              colorScheme='green'
+            >
+              Go
+            </Button>
+          </ButtonGroup>
         </AccordionPanel>
       </AccordionItem>
     </Accordion>

@@ -1,51 +1,54 @@
 import { useQuery, useQueryClient } from 'react-query';
-import { Content, ContentSummary, Genre, Provider } from '../types';
+import { Content } from '../types';
 import { fetchAll } from '../util/fetch';
-import { formatQuery } from '../util/format';
-import { prefetch } from '../util/prefetch';
 
-type useFetchDef = {
+type useFetchOptionsDef = {
   page: number;
-  query: {
-    genres: Genre[];
-    providers: Provider[];
-  };
-  initialData: {
-    contentList: ContentSummary[];
-    pageCount: number;
-  };
+  genres: string;
+  providers: string;
 };
 
-const useFetch = (type: Content, { page, query, initialData }: useFetchDef) => {
+const useFetch = (
+  type: Content,
+  { page, genres, providers }: useFetchOptionsDef
+) => {
   const queryClient = useQueryClient();
 
   return useQuery(
     [
-      `/${type}`,
+      type,
       {
         page,
-        genres: formatQuery(query.genres),
-        providers: formatQuery(query.providers),
+        genres,
+        providers,
       },
     ],
-    async () =>
-      await fetchAll(type, {
+    () =>
+      fetchAll(type, {
         page,
-        genres: query.genres,
-        providers: query.providers,
+        genres,
+        providers,
       }),
     {
-      keepPreviousData: true,
-      initialData: {
-        results: initialData.contentList,
-        pageCount: initialData.pageCount,
-      },
-      onSuccess: () => {
-        prefetch(type, query.genres, query.providers, {
-          queryClient,
-          page,
-          pageCount: initialData.pageCount,
-        });
+      onSuccess: data => {
+        if (page >= data.pageCount) return;
+
+        queryClient.prefetchQuery(
+          [
+            type,
+            {
+              page: page + 1,
+              genres,
+              providers,
+            },
+          ],
+          () =>
+            fetchAll(type, {
+              page: page + 1,
+              genres,
+              providers,
+            })
+        );
       },
     }
   );

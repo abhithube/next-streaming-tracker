@@ -1,21 +1,22 @@
 import { Box, Button, Divider, Flex, Heading } from '@chakra-ui/react';
 import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Genre } from '../lib/types';
 
 type FilterProps = {
   type: string;
-  list: any[];
-  selected: any[];
+  list: Genre[];
+  selected: number[];
   setSelected: Dispatch<SetStateAction<any[]>>;
 };
 
 const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
-  const onClick = (item: any) => {
+  const handleClick = (id: number) => {
     let newSelected = selected.slice();
-    if (selected.includes(item)) {
-      newSelected = newSelected.filter(({ id }) => id !== item.id);
+    if (selected.includes(id)) {
+      newSelected = newSelected.filter(nid => nid !== id);
       setSelected(newSelected);
     } else {
-      newSelected.push(item);
+      newSelected.push(id);
       setSelected(newSelected);
     }
   };
@@ -30,8 +31,8 @@ const Filter = ({ type, list, selected, setSelected }: FilterProps) => {
         {list.map(item => (
           <Fragment key={item.id}>
             <Button
-              onClick={() => onClick(item)}
-              colorScheme={selected.includes(item) ? 'red' : 'gray'}
+              onClick={() => handleClick(item.id)}
+              colorScheme={selected.includes(item.id) ? 'red' : 'gray'}
               mr='4'
               mb='4'
             >
