@@ -38,7 +38,7 @@ const FilterAccordian = ({ genreList, providerList }: FilterAccordianProps) => {
     if (router.query.providers)
       setProviders(
         String(router.query.providers)
-          .split(',')
+          .split('|')
           .map(id => Number(id))
       );
     else setProviders([]);
